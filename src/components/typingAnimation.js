@@ -5,7 +5,8 @@ import TypingPhase from '../enums/typingPhases';
 import Font from '../enums/fonts';
 
 const TYPING_INTERVAL = 150;
-const IDLING_INTERVAL = 2000;
+const IDLING_START_INTERVAL = 500;
+const IDLING_END_INTERVAL = 2000;
 const DELETING_INTERVAL = 50;
 const STYLES_CSS = {
   [Font.Poppins]: 'font-poppins',
@@ -39,12 +40,12 @@ function TypingAnimation(props) {
           setCurrentIndex((currentIndex + 1) % texts.length);
           const timeout = setTimeout(() => {
             setTypingPhase(TypingPhase.Typing);
-          }, IDLING_INTERVAL);
+          }, IDLING_START_INTERVAL);
           return () => clearTimeout(timeout);
         } else {
           const timeout = setTimeout(() => {
             setTypingPhase(TypingPhase.Deleting);
-          }, IDLING_INTERVAL);
+          }, IDLING_END_INTERVAL);
           return () => clearTimeout(timeout);
         }
       }
