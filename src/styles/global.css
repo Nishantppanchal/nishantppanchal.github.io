@@ -2,10 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Montserrat+Alternates&family=Sofia&family=Space+Mono&family=Spectral&display=swap');
 
 @layer base {
-    html {
-        @apply font-poppin
+  html {
+    @apply font-poppin;
+  }
+}
+
+@layer components {
+  .cursor:after {
+    content: '|';
+    @apply to-blue-500;
+  }
+
+  .cursor.blinking:after {
+    animation: blink 1s step-start infinite;
+  }
+
+  @keyframes blink {
+    50% {
+      opacity: 0;
     }
+  }
 }
