@@ -11,16 +11,16 @@ function Header(props) {
   const toggledClass = `text-black ${defaultClass}`;
   const untoggledClass = `text-slate-500 hover:text-black ${defaultClass}`;
 
-  const [isSm, setIsSm] = useState(window.innerWidth < sm ? true : false);
-  const [isMd, setIsMd] = useState(
-    sm <= window.innerWidth && window.innerWidth < md ? true : false
-  );
+  const [isSm, setIsSm] = useState(false);
+  const [isMd, setIsMd] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
       setIsSm(window.innerWidth < sm ? true : false);
       setIsMd(sm <= window.innerWidth && window.innerWidth < md ? true : false);
     };
+
+    handleResize();
 
     window.addEventListener('resize', handleResize);
   }, []);
