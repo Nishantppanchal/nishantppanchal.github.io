@@ -63,7 +63,7 @@ function TypingAnimation(props) {
 
   return (
     <div class='flex justify-center'>
-      <div class='py-[20%] text-5xl'>
+      <div class='py-[30%] text-4xl md:text-5xl text-center'>
         <span>{props.prefixText + ' '}</span>
         <span
           className={`cursor ${

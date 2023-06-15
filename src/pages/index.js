@@ -7,6 +7,7 @@ import Typical from 'react';
 import TypingAnimation from '../components/typingAnimation';
 import Page from '../enums/pages';
 import Font from '../enums/fonts';
+import PageTemplate from '../components/pageTemplate';
 
 const TYPING_TEXTS = [
   'Software Engineer',
@@ -23,14 +24,13 @@ const TYPING_STYLES = [
 
 function IndexPage() {
   return (
-    <Layout>
-      <Header page={Page.Home} />
+    <PageTemplate page={Page.Home}>
       <TypingAnimation
         prefixText='I am a'
         texts={TYPING_TEXTS}
         textsStyles={TYPING_STYLES}
       />
-    </Layout>
+    </PageTemplate>
   );
 }
 
