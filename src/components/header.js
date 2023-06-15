@@ -23,7 +23,7 @@ function Header(props) {
     };
 
     window.addEventListener('resize', handleResize);
-  });
+  }, []);
 
   function handleNavigate(event, page) {
     event.preventDefault();
