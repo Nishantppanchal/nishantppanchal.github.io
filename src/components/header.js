@@ -66,7 +66,7 @@ function Header(props) {
 
   return (
     <>
-      <header class='flex flex-row items-start max-h-fit my-20 space-x-5'>
+      <header class='flex flex-row items-start max-h-fit mb-20 space-x-5'>
         <button
           class='flex-none text-2xl sm:text-3xl justify-left'
           onClick={(event) => handleNavigate(event, Page.Home)}
