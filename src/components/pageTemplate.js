@@ -6,7 +6,7 @@ import { Transition } from 'react-transition-group';
 function PageTemplate({ children, page, location }) {
   return (
     <Layout>
-      <title>page</title>
+      <title>{page}</title>
       <Header page={page} />
       {children}
     </Layout>

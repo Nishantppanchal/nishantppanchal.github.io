@@ -8,17 +8,20 @@ const TYPING_INTERVAL = 150;
 const IDLING_START_INTERVAL = 500;
 const IDLING_END_INTERVAL = 2000;
 const DELETING_INTERVAL = 50;
-const STYLES_CSS = {
-  [Font.Poppins]: 'font-poppins',
-  [Font.SpaceMono]: 'font-spaceMono',
-  [Font.Sofia]: 'font-sofia',
-  [Font.Spectral]: 'font-spectral',
-  [Font.MontserratAlternates]: 'font-montserratAlternates',
-};
+const TYPING_TEXTS = [
+  'Software Engineer',
+  'Designer',
+  'Researcher',
+  'Problem Solver',
+];
+const TYPING_STYLES = [
+  'font-spaceMono',
+  'font-sofia',
+  'font-spectral',
+  'font-montserratAlternates',
+];
 
 function TypingAnimation(props) {
-  const texts = props.texts;
-
   const [currentIndex, setCurrentIndex] = useState(0);
   const [typedText, setTypedText] = useState('');
   const [typingPhase, setTypingPhase] = useState(TypingPhase.Typing);
@@ -26,18 +29,20 @@ function TypingAnimation(props) {
   useEffect(() => {
     switch (typingPhase) {
       case TypingPhase.Typing: {
-        if (typedText.length >= texts[currentIndex].length) {
+        if (typedText.length >= TYPING_TEXTS[currentIndex].length) {
           setTypingPhase(TypingPhase.Idling);
         } else {
           const timeout = setTimeout(() => {
-            setTypedText(texts[currentIndex].slice(0, typedText.length + 1));
+            setTypedText(
+              TYPING_TEXTS[currentIndex].slice(0, typedText.length + 1)
+            );
           }, TYPING_INTERVAL);
           return () => clearTimeout(timeout);
         }
       }
       case TypingPhase.Idling: {
         if (typedText.length == 0) {
-          setCurrentIndex((currentIndex + 1) % texts.length);
+          setCurrentIndex((currentIndex + 1) % TYPING_TEXTS.length);
           const timeout = setTimeout(() => {
             setTypingPhase(TypingPhase.Typing);
           }, IDLING_START_INTERVAL);
@@ -54,29 +59,27 @@ function TypingAnimation(props) {
           setTypingPhase(TypingPhase.Idling);
         } else {
           const timeout = setTimeout(() => {
-            setTypedText(texts[currentIndex].slice(0, typedText.length - 1));
+            setTypedText(
+              TYPING_TEXTS[currentIndex].slice(0, typedText.length - 1)
+            );
           }, DELETING_INTERVAL);
           return () => clearTimeout(timeout);
         }
       }
     }
-  }, [texts, typedText, typingPhase]);
+  }, [TYPING_TEXTS, typedText, typingPhase]);
 
   return (
-    <div class='flex justify-center'>
-      <div class='py-[30%] text-4xl md:text-5xl text-center'>
-        <span>{props.prefixText + ' '}</span>
-        <span
-          className={`cursor ${
-            typingPhase == TypingPhase.Idling ? ' blinking' : ''
-          }`}
-            // className='cursor'
-        >
-          <span class={STYLES_CSS[props.textsStyles[currentIndex]]}>
-            {typedText}
-          </span>
-        </span>
-      </div>
+    <div className={props.textStyles}>
+      <span>I am a </span>
+      <span
+        className={`cursor ${
+          typingPhase == TypingPhase.Idling ? ' blinking' : ''
+        } ${TYPING_STYLES[currentIndex]} will-change-scroll`}
+        // className='cursor'
+      >
+        {typedText}
+      </span>
     </div>
   );
 }
