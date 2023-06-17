@@ -13,7 +13,7 @@ import MyPhilosophy from '../components/myPhilosophy';
 function IndexPage() {
   return (
     <PageTemplate page={Page.Home}>
-      <div className='flex flex-col justify-center h-[calc(70vh)]'>
+      <div className='flex flex-col justify-center h-[calc(60vh)] sm:h-[calc(70vh)]'>
         <TypingAnimation textStyles='m-auto text-4xl md:text-5xl text-center' />
       </div>
       <MyPhilosophy />
