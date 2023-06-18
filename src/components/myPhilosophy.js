@@ -23,7 +23,7 @@ function MyPhilosophy() {
       </h1>
       <p className='mt-5'>
         I hold the firm conviction that in order to craft innovative software of
-        profound intricacy and beaut, one must possess an deep comprehension of
+        profound intricacy and beauty, one must possess an deep comprehension of
         the entirety of their code. Therefore, I maintain that ones pursuit of
         knowledge in the Science of Computing assumes an indispensable role in
         the journey toward achieving mastery in the Art of Programming.
