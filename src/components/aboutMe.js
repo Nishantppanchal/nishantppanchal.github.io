@@ -36,9 +36,6 @@ function AboutMe() {
         I'm passionate about <i>artificial intelligence</i>, <i>machine learning</i>, <i>embedded
         devices</i>, <i>robotics</i>, <i>mathematics</i> and <i>software engineering</i>.
       </p>
-      <p className='mt-5'>
-        I believe that for one to be able to design powerful and revolutionary software, they must understand what every part of the code they write does. Thus, I believe the studying the science of Computing is critical part of the process to mastering the art of programming. Hence, I strive to study Computer Science from assembly code and Operating Systems to Massively Distributed Systems.
-      </p>
     </div>
   );
 }
