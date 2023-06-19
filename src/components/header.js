@@ -3,6 +3,7 @@ import Page from '../enums/pages';
 import { navigate } from 'gatsby';
 import { useEffect, useState } from 'react';
 import TypingAnimation from './typingAnimation';
+import { motion } from 'framer-motion';
 
 const md = 768;
 
@@ -55,14 +56,22 @@ function Header(props) {
     <>
       <header className='flex flex-row items-start max-h-fit space-x-5'>
         <div className='flex-none text-2xl sm:text-3xl justify-left text-left'>
-          <button onClick={(event) => handleNavigate(event, Page.Home)}>
-            Nishant Panchal
-          </button>
-          {props.page != Page.Home && !isMd ? (
-            <span className='text-slate-500'>{` - ${props.page}`}</span>
-          ) : (
-            ''
-          )}
+          <div className='flex flex-row space-x-2'>
+            <button onClick={(event) => handleNavigate(event, Page.Home)}>
+              Nishant Panchal
+            </button>
+            {props.page != Page.Home && !isMd ? (
+              <motion.span
+                initial={{ opacity: 0, y: '0.25em' }}
+                animate={{ opacity: 1, y: '0em' }}
+                transition={{ duration: 1, ease: [0.2, 0.65, 0.3, 0.9] }}
+                className='text-slate-500 inline-block'
+                before=' '
+              >{` - ${props.page}`}</motion.span>
+            ) : (
+              ''
+            )}
+          </div>
           {props.page != Page.Home ? (
             <TypingAnimation textStyles='text-lg' />
           ) : (

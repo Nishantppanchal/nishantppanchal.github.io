@@ -9,6 +9,7 @@ import PageTemplate from '../components/pageTemplate';
 import Contact from '../components/contact';
 import AboutMe from '../components/aboutMe';
 import MyPhilosophy from '../components/myPhilosophy';
+import { motion } from 'framer-motion';
 
 function IndexPage() {
   return (
