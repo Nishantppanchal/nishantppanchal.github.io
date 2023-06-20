@@ -1,4 +1,5 @@
 import * as React from 'react';
+import Obfuscate from 'react-obfuscate';
 
 function Contact() {
   return (
@@ -24,9 +25,7 @@ function Contact() {
         <div className='flex flex-row items-center space-x-2 mt-1'>
           <p>Email</p>
           <hr class='border-1 rounded border-slate-500 grow' />
-          <a href='mailto: nishantppanchal@gmail.com'>
-            nishantppanchal@gmail.com
-          </a>
+          <Obfuscate email='nishantppanchal@gmail.com' />
         </div>
         <div className='flex flex-row items-center space-x-2 mt-1'>
           <p>LinkedIn</p>
