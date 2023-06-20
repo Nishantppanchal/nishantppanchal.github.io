@@ -22,14 +22,11 @@ function MyPhilosophy() {
         <p>My Philosophy</p>
       </h1>
       <p className='mt-5'>
-        I hold the firm conviction that in order to craft innovative software of
-        profound intricacy and beauty, one must possess a deep comprehension of
-        the entirety of their code. Therefore, I maintain that ones pursuit of
-        knowledge in the Science of Computing assumes an indispensable role in
-        the journey toward achieving mastery in the Art of Programming.
-        Consequently, I ardently endeavor to immerse myself in the study of
-        Computer Science, from assembly code and Operating Systems to Massively
-        Distributed Systems.
+        I believe you have to understand your code in it entirety to be able to
+        to create innovative software. Therefore I believe it is vital for us to
+        study Science of Computing to be able to master to the Art of
+        Programming. Hence, I have chosen to study Computer Science, from
+        assembly code and Operating Systems to Massively Distributed Systems.
       </p>
     </div>
   );
