@@ -30,14 +30,14 @@ function Contact() {
         <div className='flex flex-row items-center space-x-2 mt-1'>
           <p>LinkedIn</p>
           <hr class='border-1 rounded border-slate-500 grow' />
-          <a href='https://www.linkedin.com/in/nishantppanchal/'>
+          <Obfuscate href='https://www.linkedin.com/in/nishantppanchal/'>
             nishantppanchal
-          </a>
+          </Obfuscate>
         </div>
         <div className='flex flex-row items-center space-x-2 mt-1'>
           <p>GitHub</p>
           <hr class='border-1 rounded border-slate-500 grow' />
-          <a href='https://github.com/Nishantppanchal'>@nishantppanchal</a>
+          <Obfuscate href='https://github.com/Nishantppanchal'>@nishantppanchal</Obfuscate>
         </div>
       </div>
     </>

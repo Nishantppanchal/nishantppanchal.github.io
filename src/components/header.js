@@ -64,6 +64,7 @@ function Header(props) {
               <motion.span
                 initial={{ opacity: 0, y: '0.25em' }}
                 animate={{ opacity: 1, y: '0em' }}
+                exit={{ opacity: 0, y: '-0.25em' }}
                 transition={{ duration: 1, ease: [0.2, 0.65, 0.3, 0.9] }}
                 className='text-slate-500 inline-block'
                 before=' '
