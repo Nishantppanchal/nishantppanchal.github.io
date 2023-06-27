@@ -77,6 +77,23 @@ const courses = [
       },
     ],
   },
+  {
+    sem: 1,
+    year: 2023,
+    coursesList: [
+      {
+        code: 'FIT2004',
+        name: 'Algorithms And Data Structures',
+        mark: 88,
+        grade: 'HD',
+        note: false,
+      },
+      {
+        code: 'FIT2083',
+        name: 'INNOVATION AND RESEARCH IN COMPUTER SCIENCE'
+      }
+    ]
+  }
 ];
 
 for (let i = 0, accum = 0; i < courses.length; i++) {
@@ -125,7 +142,7 @@ function Education() {
         <p className='italic font-spectral mt-1 text-lg text-left'>
           Bachelor of Computer Science Advanced (Honours)
         </p>
-        <p>WAM: 86.091 | GPA: 3.875 (4.0 scale)</p>
+        <p>WAM: 87.917 | GPA: 3.917 (4.0 scale)</p>
       </div>
       <motion.button
         className='flex mt-5 flex-row items-center'

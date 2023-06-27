@@ -76,7 +76,9 @@ function Header(props) {
             )}
           </div>
           {props.page !== Page.Home ? (
-            <TypingAnimation textStyles='text-lg' />
+            <div className='h-8'>
+              <TypingAnimation textStyles='text-lg' />
+            </div>
           ) : (
             ''
           )}
