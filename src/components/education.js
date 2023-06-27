@@ -1,6 +1,103 @@
-import * as React from 'react';
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+
+const courses = [
+  {
+    sem: 1,
+    year: 2022,
+    coursesList: [
+      {
+        code: 'FIT1053',
+        name: 'Algorithms And Programming In Python: Advanced',
+        mark: 'Exempted',
+        grade: false,
+        note: false,
+      },
+      {
+        code: 'FIT1047',
+        name: 'Introduction To Computer Systems, Networks And Security',
+        mark: 93,
+        grade: 'HD',
+        note: false,
+      },
+      {
+        code: 'FIT2081',
+        name: 'Mobile Application Development',
+        mark: 82,
+        grade: 'HD',
+        note: false,
+      },
+      {
+        code: 'FIT3175',
+        name: 'Usability',
+        mark: 86,
+        grade: 'HD',
+        note: false,
+      },
+      {
+        code: 'MAT1830',
+        name: 'Discrete Mathematics For Computer Science',
+        mark: 88,
+        grade: 'HD',
+        note: false,
+      },
+    ],
+  },
+  {
+    sem: 2,
+    year: 2022,
+    coursesList: [
+      {
+        code: 'FIT1049',
+        name: 'IT Professional Practice',
+        mark: 77,
+        grade: 'D',
+        note: false,
+      },
+      {
+        code: 'FIT1054',
+        name: 'Computer Science (Advanced)',
+        mark: 87,
+        grade: 'HD',
+        note: false,
+      },
+      {
+        code: 'FIT2100',
+        name: 'Operating Systems',
+        mark: 93,
+        grade: 'HD',
+        note: 'Received highest mark',
+      },
+      {
+        code: 'MTH1030',
+        name: 'Techniques For Modelling',
+        mark: 80,
+        grade: 'HD',
+        note: false,
+      },
+    ],
+  },
+];
+
+for (let i = 0, accum = 0; i < courses.length; i++) {
+  courses[i].delay = accum;
+  accum += 0.1;
+
+  for (let j = 0; j < courses[i].coursesList.length; j++) {
+    courses[i].coursesList[j].delay = accum;
+    accum += 0.1;
+  }
+}
 
 function Education() {
+  const [coursesVisible, toggleCourseVisible] = useState(false);
+
+  function handleToggleCourses(e) {
+    e.preventDefault();
+
+    toggleCourseVisible(!coursesVisible);
+  }
+
   return (
     <>
       <h1 className='font-bold text-xl flex flex-row space-x-2'>
@@ -25,14 +122,75 @@ function Education() {
           <div className='text-lg'>Monash University</div>
           <div className='text-slate-500 text-right'>2022 - 2025</div>
         </h2>
-        <p className='italic font-spectral mt-1'>
+        <p className='italic font-spectral mt-1 text-lg text-left'>
           Bachelor of Computer Science Advanced (Honours)
         </p>
         <p>WAM: 86.091 | GPA: 3.875 (4.0 scale)</p>
       </div>
-      <div className='mt-5'>
+      <motion.button
+        className='flex mt-5 flex-row items-center'
+        onClick={handleToggleCourses}
+        whileTap={{ scale: 0.95 }}
+      >
+        <motion.svg
+          xmlns='http://www.w3.org/2000/svg'
+          viewBox='0 0 20 20'
+          fill='currentColor'
+          className='w-5 h-5'
+          animate={{ rotate: coursesVisible ? 90 : 0 }}
+          transition={{
+            duration: 0.5,
+            ease: [0.2, 0.65, 0.3, 0.9],
+          }}
+        >
+          <path
+            fillRule='evenodd'
+            d='M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z'
+            clipRule='evenodd'
+          />
+        </motion.svg>
         <h2 className='font-bold'>Undergraduate Coursework</h2>
-      </div>
+      </motion.button>
+      {coursesVisible &&
+        courses.map(({ sem, year, coursesList, delay }, i) => (
+          <div className='mt-2 ml-6' key={i}>
+            <motion.h3
+              className='text-slate-500'
+              initial={{ x: -100, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: 100, opacity: 0 }}
+              transition={{
+                delay: delay,
+                duration: 0.3,
+                ease: [0.2, 0.65, 0.3, 0.9],
+              }}
+            >{`Semester ${sem} ${year}`}</motion.h3>
+            <ul>
+              {coursesList.map(
+                ({ code, name, mark, grade, note, delay }, j) => (
+                  <motion.li
+                    key={j}
+                    initial={{ x: -100, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    exit={{ x: 100, opacity: 0 }}
+                    transition={{
+                      delay: delay,
+                      duration: 0.3,
+                      ease: [0.2, 0.65, 0.3, 0.9],
+                    }}
+                    className='mt-2'
+                  >
+                    <div className='overflow-auto italic font-spectral text-lg text-left'>{`${code} - ${name}`}</div>
+                    <div className='text-sm'>
+                      {mark !== 'Exempted' ? `Grade: ${mark}% | ${grade}` : mark}
+                    </div>
+                    {note ? <div className='text-sm'>{note}</div> : null}
+                  </motion.li>
+                )
+              )}
+            </ul>
+          </div>
+        ))}
     </>
   );
 }

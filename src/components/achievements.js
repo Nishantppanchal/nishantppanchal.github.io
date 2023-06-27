@@ -22,7 +22,7 @@ function Achievements() {
       </h1>
       <div className='mt-5'>
         <h2 className='text-lg'>2022</h2>
-        <ul className='mt-1'>
+        <ul className='mt-1 text-left'>
           <li>
             Highest Mark in{' '}
             <a href='https://handbook.monash.edu/2022/units/FIT2100?year=2022'>
@@ -36,26 +36,26 @@ function Achievements() {
       </div>
       <div className='mt-5'>
         <h2 className='text-lg'>2021</h2>
-        <ul className='mt-1'>
+        <ul className='mt-1 text-left'>
           <li>John Monash Science School Silver Diploma Award</li>
         </ul>
       </div>
       <div className='mt-5'>
         <h2 className='text-lg'>2020</h2>
-        <ul className='mt-1'>
+        <ul className='mt-1text-left'>
           <li>Distinction in Chemistry Olympiad</li>
           <li>Distinction in Biology Olympiad</li>
         </ul>
       </div>
       <div className='mt-5'>
         <h2 className='text-lg'>2019</h2>
-        <ul className='mt-1'>
+        <ul className='mt-1 text-left'>
           <li>High Distinction in Australian Geography Competition</li>
         </ul>
       </div>
       <div className='mt-5'>
         <h2 className='text-lg'>2019</h2>
-        <ul className='mt-1'>
+        <ul className='mt-1 text-left'>
           <li>
             High Distinction in{' '}
             <a href='https://www.sciencevictoria.com.au/sts/'>

@@ -12,7 +12,6 @@ function Header(props) {
   const toggledClass = `text-black ${defaultClass}`;
   const untoggledClass = `text-slate-500 hover:text-black ${defaultClass}`;
 
-  const [isSm, setIsSm] = useState(false);
   const [isMd, setIsMd] = useState(false);
 
   useEffect(() => {
@@ -57,10 +56,13 @@ function Header(props) {
       <header className='flex flex-row items-start max-h-fit space-x-5'>
         <div className='flex-none text-2xl sm:text-3xl justify-left text-left'>
           <div className='flex flex-row space-x-2'>
-            <button onClick={(event) => handleNavigate(event, Page.Home)}>
+            <motion.button
+              onClick={(event) => handleNavigate(event, Page.Home)}
+              whileTap={{ scale: 0.95 }}
+            >
               Nishant Panchal
-            </button>
-            {props.page != Page.Home && !isMd ? (
+            </motion.button>
+            {props.page !== Page.Home && !isMd ? (
               <motion.span
                 initial={{ opacity: 0, y: '0.25em' }}
                 animate={{ opacity: 1, y: '0em' }}
@@ -73,37 +75,40 @@ function Header(props) {
               ''
             )}
           </div>
-          {props.page != Page.Home ? (
+          {props.page !== Page.Home ? (
             <TypingAnimation textStyles='text-lg' />
           ) : (
             ''
           )}
         </div>
         <nav className='flex flex-col grow gap-x-5 justify-end pt-1 sm:pt-2 sm:flex-row'>
-          <button
+          <motion.button
             className={
               props.page === Page.Projects ? toggledClass : untoggledClass
             }
             onClick={(event) => handleNavigate(event, Page.Projects)}
+            whileTap={{ scale: 0.95 }}
           >
             projects
-          </button>
-          <button
+          </motion.button>
+          <motion.button
             className={
               props.page === Page.Research ? toggledClass : untoggledClass
             }
             onClick={(event) => handleNavigate(event, Page.Research)}
+            whileTap={{ scale: 0.95 }}
           >
             research
-          </button>
-          <button
+          </motion.button>
+          <motion.button
             className={
               props.page === Page.Resume ? toggledClass : untoggledClass
             }
             onClick={(event) => handleNavigate(event, Page.Resume)}
+            whileTap={{ scale: 0.95 }}
           >
             resume
-          </button>
+          </motion.button>
         </nav>
       </header>
     </>

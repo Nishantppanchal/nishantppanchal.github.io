@@ -24,19 +24,19 @@ function Contact() {
       <div className='mt-5'>
         <div className='flex flex-row items-center space-x-2 mt-1'>
           <p>Email</p>
-          <hr class='border-1 rounded border-slate-500 grow' />
+          <hr className='border-1 rounded border-slate-500 grow' />
           <Obfuscate email='nishantppanchal@gmail.com' />
         </div>
         <div className='flex flex-row items-center space-x-2 mt-1'>
           <p>LinkedIn</p>
-          <hr class='border-1 rounded border-slate-500 grow' />
+          <hr className='border-1 rounded border-slate-500 grow' />
           <Obfuscate href='https://www.linkedin.com/in/nishantppanchal/'>
             nishantppanchal
           </Obfuscate>
         </div>
         <div className='flex flex-row items-center space-x-2 mt-1'>
           <p>GitHub</p>
-          <hr class='border-1 rounded border-slate-500 grow' />
+          <hr className='border-1 rounded border-slate-500 grow' />
           <Obfuscate href='https://github.com/Nishantppanchal'>@nishantppanchal</Obfuscate>
         </div>
       </div>

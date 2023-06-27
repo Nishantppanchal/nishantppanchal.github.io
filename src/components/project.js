@@ -8,7 +8,7 @@ function Project({ projectName, date, tags, shortDes, longDes, links }) {
         <div className='font-bold'>{projectName}</div>
         <div className='text-slate-500'>{`- ${date}`}</div>
       </h1>
-      <div className='flex flex-row overflow-auto mt-1 space-x-2'>
+      <div className='flex flex-row flex-wrap mt-1 gap-x-2 gap-y-1'>
         {tags.map((tag) => (
           <Tag tagText={tag} />
         ))}
