@@ -322,9 +322,6 @@ const projects = [
 const Projects = () => {
   return (
     <PageTemplate page={Page.Projects}>
-      {/* <div className='text-3xl mt-20 text-center'>
-        🚧 Page Under Construction 🚧
-      </div> */}
       {projects.map(({ projectName, date, tags, shortDes, longDes, links }) => (
         <Project
           projectName={projectName}

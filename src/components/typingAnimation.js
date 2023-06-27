@@ -2,7 +2,6 @@ import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import TypingPhase from '../enums/typingPhases';
-import Font from '../enums/fonts';
 
 const TYPING_INTERVAL = 150;
 const IDLING_START_INTERVAL = 500;

@@ -1,7 +1,7 @@
 import React from 'react';
 import Layout from './layout';
 import Header from './header';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 function PageTemplate({ children, page }) {
   return (
