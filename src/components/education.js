@@ -223,7 +223,7 @@ function Education() {
                   >
                     <div className='overflow-auto italic font-spectral text-lg text-left'>{`${code} - ${name}`}</div>
                     <div className='text-sm'>
-                      {typeof mark !== String ? `Grade: ${mark}% | ${grade}` : mark}
+                      {typeof mark !==  'string' ? `Grade: ${mark}% | ${grade}` : mark}
                     </div>
                     {note ? <div className='text-sm'>{note}</div> : null}
                   </motion.li>
