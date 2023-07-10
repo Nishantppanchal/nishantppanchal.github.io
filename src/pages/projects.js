@@ -55,6 +55,86 @@ const projects = [
     ],
   },
   {
+    projectName: 'Process Scheduler',
+    date: 'November 2022',
+    tags: ['C', 'makefile'],
+    shortDes: 'Simulates a process scheduler in C',
+    longDes: (
+      <p>
+        This program simulate a process scheduler in C for{' '}
+        <a href='https://handbook.monash.edu/2022/units/FIT2100?year=2022'>
+          FIT2100
+        </a>
+        . Three different scheduling algorithms.
+      </p>
+    ),
+    links: [
+      {
+        name: 'GitHub',
+        href: 'https://github.com/Nishantppanchal/MONAI/tree/5674-get-std-from-tensor',
+      },
+    ],
+  },
+  {
+    projectName: 'Fileutil C Program',
+    date: 'August 2022',
+    tags: ['C', 'makefile'],
+    shortDes: 'A program to edit files from command line using C',
+    longDes: (
+      <p>
+        A program written in C without any libraries for{' '}
+        <a href='https://handbook.monash.edu/2022/units/FIT2100?year=2022'>
+          FIT2100
+        </a>
+        . This program allows users to edit files from command line using C.
+      </p>
+    ),
+    links: [
+      {
+        name: 'GitHub',
+        href: 'https://github.com/Nishantppanchal/Fileutil-c-program',
+      },
+    ],
+  },
+  {
+    projectName: 'RSA Key Generator',
+    date: 'July 2022',
+    tags: ['Python', 'Cryptography'],
+    shortDes: 'A python RSA key generator without the use of libraries',
+    longDes: (
+      <p>
+        A RSA key generator written in Python that allow user to generate RSA
+        keys for encryption and decryption. No libraries where used to
+        generating this the RSA key. All the mathematics was custom written.
+      </p>
+    ),
+    links: [
+      {
+        name: 'GitHub',
+        href: 'https://github.com/Nishantppanchal/RSA-key-generator',
+      },
+    ],
+  },
+  {
+    projectName: 'MARIE Wordle Game',
+    date: 'July 2022',
+    tags: ['Assembly', 'MARIE'],
+    shortDes: 'Wordle game in MARIE',
+    longDes: (
+      <p>
+        A wordle game in MARIE assembly language. This was developed as part of
+        a project for{' '}
+        <a href='https://handbook.monash.edu/2022/units/FIT1047'>FIT1047</a>.
+      </p>
+    ),
+    links: [
+      {
+        name: 'GitHub',
+        href: 'https://github.com/Nishantppanchal/MAIRE-Wordle-Game',
+      },
+    ],
+  },
+  {
     projectName: 'Time Tracking Website',
     date: 'February 2022',
     tags: [
@@ -90,86 +170,6 @@ const projects = [
       {
         name: 'Backend GitHub',
         href: 'https://github.com/Nishantppanchal/Time-tracking-website-backend',
-      },
-    ],
-  },
-  {
-    projectName: 'Fileutil C Program',
-    date: 'August 2022',
-    tags: ['C', 'makefile'],
-    shortDes: 'A program to edit files from command line using C',
-    longDes: (
-      <p>
-        A program written in C without any libraries for{' '}
-        <a href='https://handbook.monash.edu/2022/units/FIT2100?year=2022'>
-          FIT2100
-        </a>
-        . This program allows users to edit files from command line using C.
-      </p>
-    ),
-    links: [
-      {
-        name: 'GitHub',
-        href: 'https://github.com/Nishantppanchal/Fileutil-c-program',
-      },
-    ],
-  },
-  {
-    projectName: 'Process Scheduler',
-    date: 'November 2022',
-    tags: ['C', 'makefile'],
-    shortDes: 'Simulates a process scheduler in C',
-    longDes: (
-      <p>
-        This program simulate a process scheduler in C for{' '}
-        <a href='https://handbook.monash.edu/2022/units/FIT2100?year=2022'>
-          FIT2100
-        </a>
-        . Three different scheduling algorithms.
-      </p>
-    ),
-    links: [
-      {
-        name: 'GitHub',
-        href: 'https://github.com/Nishantppanchal/MONAI/tree/5674-get-std-from-tensor',
-      },
-    ],
-  },
-  {
-    projectName: 'RSA Key Generator',
-    date: 'July 2022',
-    tags: ['Python', 'Cryptography'],
-    shortDes: 'A python RSA key generator without the use of libraries',
-    longDes: (
-      <p>
-        A RSA key generator written in Python that allow user to generate RSA
-        keys for encryption and decryption. No libraries where used to
-        generating this the RSA key. All the mathematics was custom written.
-      </p>
-    ),
-    links: [
-      {
-        name: 'GitHub',
-        href: 'https://github.com/Nishantppanchal/RSA-key-generator',
-      },
-    ],
-  },
-  {
-    projectName: 'MARIE Wordle Game',
-    date: '2021',
-    tags: ['Assembly', 'MARIE'],
-    shortDes: 'Wordle game in MARIE',
-    longDes: (
-      <p>
-        A wordle game in MARIE assembly language. This was developed as part of
-        a project for{' '}
-        <a href='https://handbook.monash.edu/2022/units/FIT1047'>FIT1047</a>.
-      </p>
-    ),
-    links: [
-      {
-        name: 'GitHub',
-        href: 'https://github.com/Nishantppanchal/MAIRE-Wordle-Game',
       },
     ],
   },
