@@ -90,8 +90,32 @@ const courses = [
       },
       {
         code: 'FIT2083',
-        name: 'INNOVATION AND RESEARCH IN COMPUTER SCIENCE'
-      }
+        name: 'Innovation And Research In Computer Science',
+        mark: 95,
+        grade: 'HD',
+        note: false,
+      },
+      {
+        code: 'FIT2099',
+        name: 'Object Oriented Design And Implementation',
+        mark: 87,
+        grade: 'HD',
+        note: false,
+      },
+      {
+        code: 'FIT2108',
+        name: 'Industry Based Learning Seminar',
+        mark: 'PGO',
+        grade: false,
+        note: 'Pass or fail only unit',
+      },
+      {
+        code: 'FIT3173',
+        name: 'Software Security',
+        mark: 92,
+        grade: 'HD',
+        note: false,
+      },
     ]
   }
 ];
@@ -199,7 +223,7 @@ function Education() {
                   >
                     <div className='overflow-auto italic font-spectral text-lg text-left'>{`${code} - ${name}`}</div>
                     <div className='text-sm'>
-                      {mark !== 'Exempted' ? `Grade: ${mark}% | ${grade}` : mark}
+                      {typeof mark !== String ? `Grade: ${mark}% | ${grade}` : mark}
                     </div>
                     {note ? <div className='text-sm'>{note}</div> : null}
                   </motion.li>
