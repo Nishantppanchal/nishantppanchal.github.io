@@ -25,7 +25,7 @@ function AboutMe() {
         <a href='https://www.churchillassetmanagement.com.au/'>
           Churchill Asset Management
         </a>{' '}
-        as a Quant. I'm also working on a research project in at team{' '}
+        as a Quantitative Analyst. I'm also working on a research project in at team{' '}
         <a href='https://www.mbsi.org.au/'>
           Melbourne Bioinnovation Student Initative
         </a>{' '}
