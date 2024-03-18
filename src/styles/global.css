@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&family=Montserrat+Alternates&family=Sofia&family=Space+Mono&family=Spectral&display=swap');
+
+@layer base {
+  html {
+    @apply font-poppin;
+    @apply selection:text-white;
+    @apply selection:bg-black;
+  }
+
+  a {
+    @apply underline;
+    @apply decoration-slate-500;
+    @apply hover:decoration-black;
+    @apply underline-offset-4;
+  }
+
+  ul {
+    @apply list-disc;
+    @apply list-outside;
+    @apply ms-8;
+    @apply marker:text-slate-500;
+    @apply text-justify;
+  }
+
+  p {
+    @apply text-justify;
+  }
+}
+
+@layer components {
+  .cursor:after {
+    content: '|';
+    @apply to-blue-500;
+  }
+
+  .cursor.blinking:after {
+    animation: blink 1s step-start infinite;
+  }
+
+  @keyframes blink {
+    50% {
+      opacity: 0;
+    }
+  }
+}
