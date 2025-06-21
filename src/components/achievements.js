@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from "react";
 
 function Achievements() {
   return (
@@ -21,10 +21,21 @@ function Achievements() {
         <p>Achievements</p>
       </h1>
       <div className='mt-5'>
+        <h2 className='text-lg'>2024</h2>
+        <ul className='mt-1 text-left'>
+          <li>
+            Commendation letter for receiving highest mark in{" "}
+            <a href='https://handbook.monash.edu/2024/units/FIT3144?year=2024'>
+              FIT3144 Advanced Computer Science Research Project
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div className='mt-5'>
         <h2 className='text-lg'>2023</h2>
         <ul className='mt-1 text-left'>
           <li>
-            Commendation letter for receiving highest mark in{' '}
+            Commendation letter for receiving highest mark in{" "}
             <a href='https://handbook.monash.edu/2022/units/FIT2083?year=2023'>
               FIT2083 Innovation and research in computer science
             </a>
@@ -35,7 +46,7 @@ function Achievements() {
         <h2 className='text-lg'>2022</h2>
         <ul className='mt-1 text-left'>
           <li>
-            Commendation letter for receiving highest mark in{' '}
+            Commendation letter for receiving highest mark in{" "}
             <a href='https://handbook.monash.edu/2022/units/FIT2100?year=2022'>
               FIT2100 Operating Systems
             </a>
@@ -72,7 +83,7 @@ function Achievements() {
         <h2 className='text-lg'>2019</h2>
         <ul className='mt-1 text-left'>
           <li>
-            High Distinction in{' '}
+            High Distinction in{" "}
             <a href='https://www.sciencevictoria.com.au/sts/'>
               Science Talent Search
             </a>

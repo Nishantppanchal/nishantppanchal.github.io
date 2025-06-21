@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from "react";
 
 function Experience() {
   return (
@@ -23,13 +23,66 @@ function Experience() {
       </h1>
       <div className='mt-5'>
         <h2 className='text-lg'>
-          Quantitative Analyst Intern at{' '}
+          Machine Learning Scientist Intern at{" "}
+          <a href='https://en.wikipedia.org/wiki/Australian_Government'>
+            Australian Government
+          </a>
+        </h2>
+        <p className='font-extralight mt-2'>
+          February 2024 - Present • Melbourne, AU
+        </p>
+        <ul className='mt-2'>
+          <li>I am working on Artificial Intelligence.</li>
+        </ul>
+      </div>
+      <div className='mt-5'>
+        <h2 className='text-lg'>
+          Cybersecurity Intern at{" "}
+          <a href='https://en.wikipedia.org/wiki/Australian_Government'>
+            Australian Government
+          </a>
+        </h2>
+        <p className='font-extralight mt-2'>
+          November 2023 - February 2024 • Canberra, AU
+        </p>
+        <ul className='mt-2'>
+          <li>Worked on a cybersecurity team.</li>
+        </ul>
+      </div>
+      <div className='mt-5'>
+        <h2 className='text-lg'>
+          Artificial Intelligence Team Lead at{" "}
+          <a href='https://www.mbsi.org.au/'>
+            Melbourne Bioinnovation Student Initative
+          </a>
+        </h2>
+        <p className='font-extralight mt-2'>
+          August 2023 - March 2025 • Melbourne, AU
+        </p>
+        <ul className='mt-2'>
+          <li>This role was voluntary.</li>
+          <li>
+            Co-lead a team working to develop a cutting-edge segmentation
+            algorithm for perivascular spaces in MRI scans of the human brain.
+          </li>
+          <li>
+            Collaborated with the{" "}
+            <a href='https://www.monash.edu/medicine/translational/neuroscience/research/law-group'>
+              iBrain research lab
+            </a>{" "}
+            at Monash University.
+          </li>
+        </ul>
+      </div>
+      <div className='mt-5'>
+        <h2 className='text-lg'>
+          Quantitative Analyst Intern at{" "}
           <a href='https://www.churchillassetmanagement.com.au/'>
             Churchill Asset Management
           </a>
         </h2>
         <p className='font-extralight mt-2'>
-          February 2023 - Present • Melbourne, AU
+          February 2023 - November 2023 • Melbourne, AU
         </p>
         <ul className='mt-2'>
           <li>
@@ -59,26 +112,26 @@ function Experience() {
       </div>
       <div className='mt-5'>
         <h2 className='text-lg'>
-          Artificial Intelligence Research Assistant at{' '}
+          Artificial Intelligence Research Assistant at{" "}
           <a href='https://www.mbsi.org.au/'>
             Melbourne Bioinnovation Student Initative
           </a>
         </h2>
         <p className='font-extralight mt-2'>
-          August 2022 - Present • Melbourne, AU
+          August 2022 - August 2023 • Melbourne, AU
         </p>
         <ul className='mt-2'>
-          <li>This role is voluntary.</li>
+          <li>This role was voluntary.</li>
           <li>
-            Developing deep learning and machine learning algorithms along with
+            Developed deep learning and machine learning algorithms along with
             software applications in collaboration with Austin Radiology AI Labs
-            to assist with Radiology research and clinical workflow at{' '}
+            to assist with Radiology research and clinical workflow at{" "}
             <a href='https://www.austin.org.au/'>Austin Hospital</a>
           </li>
           <li>Working in an interdisciplinary team.</li>
           <li>
             As a part of this role, I was appointed the position of Honorary
-            Research Assistant at{' '}
+            Research Assistant at{" "}
             <a href='https://www.austin.org.au/'>Austin Hospital</a>.
           </li>
         </ul>
