@@ -282,7 +282,7 @@ function Education() {
         <p className='italic font-spectral mt-1 text-lg text-left'>
           Bachelor of Computer Science (Honours)
         </p>
-        <p>WAM: N/A | GPA: N/A</p>
+        <p>WAM: 93.5 | GPA: 4.0 (4.0 scale)</p>
       </div>
       <Courses courses={honoursCourses} />
       <div className='mt-5'>
