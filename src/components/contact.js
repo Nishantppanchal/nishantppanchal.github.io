@@ -25,7 +25,7 @@ function Contact() {
         <div className='flex flex-row items-center space-x-2 mt-1'>
           <p>Email</p>
           <hr className='border-1 rounded border-slate-500 grow' />
-          <p>contact [at] nishantppanchal [dot] com</p>
+          <p>contact[at]nishantppanchal[dot]com</p>
         </div>
         <div className='flex flex-row items-center space-x-2 mt-1'>
           <p>LinkedIn</p>
