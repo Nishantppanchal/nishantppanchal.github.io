@@ -1,28 +1,23 @@
-import React from 'react';
-import { useEffect } from 'react';
-import { useState } from 'react';
-import TypingPhase from '../enums/typingPhases';
+import React from "react";
+import { useEffect } from "react";
+import { useState } from "react";
+import TypingPhase from "../enums/typingPhases";
 
 const TYPING_INTERVAL = 150;
 const IDLING_START_INTERVAL = 500;
 const IDLING_END_INTERVAL = 2000;
 const DELETING_INTERVAL = 50;
-const TYPING_TEXTS = [
-  'Software Engineer',
-  'Designer',
-  'Researcher',
-  'Problem Solver',
-];
+const TYPING_TEXTS = ["Engineer", "Designer", "Researcher", "Problem Solver"];
 const TYPING_STYLES = [
-  'font-spaceMono',
-  'font-sofia',
-  'font-spectral',
-  'font-montserratAlternates',
+  "font-spaceMono",
+  "font-sofia",
+  "font-spectral",
+  "font-montserratAlternates",
 ];
 
 function TypingAnimation(props) {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [typedText, setTypedText] = useState('');
+  const [typedText, setTypedText] = useState("");
   const [typingPhase, setTypingPhase] = useState(TypingPhase.Typing);
 
   useEffect(() => {
@@ -68,10 +63,9 @@ function TypingAnimation(props) {
         break;
       }
       default: {
-        console.error("Invalid TypePhase")
+        console.error("Invalid TypePhase");
         break;
       }
-        
     }
   }, [typedText, typingPhase]);
 
@@ -80,7 +74,7 @@ function TypingAnimation(props) {
       <span>I am a </span>
       <span
         className={`cursor ${
-          typingPhase === TypingPhase.Idling ? ' blinking' : ''
+          typingPhase === TypingPhase.Idling ? " blinking" : ""
         } ${TYPING_STYLES[currentIndex]} will-change-scroll`}
         // className='cursor'
       >

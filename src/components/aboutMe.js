@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 function AboutMe() {
   return (
@@ -21,20 +21,18 @@ function AboutMe() {
         <p>About Me</p>
       </h1>
       <p className='mt-5'>
-        I currently work at{' '}
-        <a href='https://www.churchillassetmanagement.com.au/'>
-          Churchill Asset Management
-        </a>{' '}
-        as a Quantitative Analyst. I'm also working on a research project in at team{' '}
-        <a href='https://www.mbsi.org.au/'>
-          Melbourne Bioinnovation Student Initative
-        </a>{' '}
-        in collaboration with{' '}
-        <a href='https://www.austin.org.au/'>Austin Hospital</a>.
+        I currently work at{" "}
+        <a href='https://en.wikipedia.org/wiki/Australian_Government'>
+          Australian Government
+        </a>{" "}
+        as a Data Scientist Intern. I'm also a part-time student at{" "}
+        <a href='https://www.monash.edu/'>Monash University</a> studying a
+        Bachelor of Computer Science (Honours).
       </p>
       <p className='mt-5'>
-        I'm passionate about <i>artificial intelligence</i>, <i>machine learning</i>, <i>embedded
-        devices</i>, <i>robotics</i>, <i>mathematics</i> and <i>software engineering</i>.
+        I'm passionate about <i>artificial intelligence</i>,{" "}
+        <i>machine learning</i>, <i>embedded devices</i>, <i>robotics</i>,{" "}
+        <i>mathematics</i> and <i>software engineering</i>.
       </p>
     </div>
   );
