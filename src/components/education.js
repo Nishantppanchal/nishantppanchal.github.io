@@ -94,7 +94,7 @@ const bachelorCourses = [
         name: "Innovation And Research In Computer Science",
         mark: 95,
         grade: "HD",
-        note: "Received highest mark",
+        note: false,
       },
       {
         code: "FIT2099",
@@ -194,8 +194,8 @@ const bachelorCourses = [
       {
         code: "MTH3175",
         name: "Network Mathematics (Advanced)",
-        mark: 92,
-        grade: "HD",
+        mark: 73,
+        grade: "D",
         note: false,
       },
     ],
