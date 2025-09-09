@@ -7,8 +7,9 @@ const TYPING_INTERVAL = 150;
 const IDLING_START_INTERVAL = 500;
 const IDLING_END_INTERVAL = 2000;
 const DELETING_INTERVAL = 50;
-const TYPING_TEXTS = ["an Engineer", "a Designer", "a Researcher", "a Problem Solver"];
+const TYPING_TEXTS = ["Nishant", "an Engineer", "a Designer", "a Researcher", "a Problem Solver"];
 const TYPING_STYLES = [
+  "",
   "font-spaceMono",
   "font-sofia",
   "font-spectral",
