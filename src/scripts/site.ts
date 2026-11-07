@@ -75,6 +75,10 @@ function revealEmail(): void {
   });
 }
 
+// The head script re-applies the system theme when the OS switches; keep the
+// toggle's label in step with it.
+systemDark.addEventListener('change', syncToggleLabels);
+
 document.addEventListener('astro:page-load', () => {
   syncToggleLabels();
   revealEmail();
