@@ -1,12 +1,21 @@
 ---
-import '@fontsource/spectral/300.css';
-import '@fontsource/spectral/400.css';
-import '@fontsource/spectral/500.css';
-import '@fontsource/spectral/300-italic.css';
-import '@fontsource/spectral/400-italic.css';
-import '@fontsource/poppins/400.css';
-import '@fontsource/poppins/500.css';
-import '@fontsource/space-mono/400.css';
+// Only the Latin subsets the site uses (Latin Extended covers accented names).
+import '@fontsource/spectral/latin-300.css';
+import '@fontsource/spectral/latin-ext-300.css';
+import '@fontsource/spectral/latin-400.css';
+import '@fontsource/spectral/latin-ext-400.css';
+import '@fontsource/spectral/latin-500.css';
+import '@fontsource/spectral/latin-ext-500.css';
+import '@fontsource/spectral/latin-300-italic.css';
+import '@fontsource/spectral/latin-ext-300-italic.css';
+import '@fontsource/spectral/latin-400-italic.css';
+import '@fontsource/spectral/latin-ext-400-italic.css';
+import '@fontsource/poppins/latin-400.css';
+import '@fontsource/poppins/latin-ext-400.css';
+import '@fontsource/poppins/latin-500.css';
+import '@fontsource/poppins/latin-ext-500.css';
+import '@fontsource/space-mono/latin-400.css';
+import '@fontsource/space-mono/latin-ext-400.css';
 import '../styles/tokens.css';
 import '../styles/global.css';
 
@@ -20,6 +29,7 @@ import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import Seo, { type Props as SeoProps } from '../components/Seo.astro';
 import ThemeScript from '../components/ThemeScript.astro';
+import { site } from '../data/site';
 
 export interface Props extends SeoProps {
   /** Home uses a slightly looser rhythm between blocks. */
@@ -36,6 +46,7 @@ const { spacious = false, preloadMono = false, ...seo } = Astro.props;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content={site.name} />
     <ThemeScript />
     {/* Fonts that size above-the-fold text, preloaded so they arrive before
          first paint and the intro block doesn't reflow when they swap in. */}

@@ -10,6 +10,12 @@ export default defineConfig({
   trailingSlash: 'ignore',
   build: {
     format: 'directory',
+    // The CSS is small; inlining it removes a render-blocking request.
+    inlineStylesheets: 'always',
+  },
+  // The old Gatsby site had a /resume page.
+  redirects: {
+    '/resume': '/experience/',
   },
   integrations: [
     sitemap({
