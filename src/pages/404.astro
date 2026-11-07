@@ -1,0 +1,50 @@
+---
+import PageHeader from '../components/PageHeader.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { nav } from '../data/site';
+---
+
+<BaseLayout
+  title="Page not found"
+  description="There is nothing at this address."
+  ogImage="home"
+  ogImageAlt="Nishant Panchal"
+  noindex
+>
+  <PageHeader
+    title="Page not found"
+    subtitle="There is nothing at this address. Try one of these instead."
+  />
+
+  <nav class="lost" aria-label="Pages">
+    <ul>
+      <li>
+        <a href="/">Home</a>
+      </li>
+      {nav.map((item) => (
+        <li>
+          <a href={item.href}>{item.label}</a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+</BaseLayout>
+
+<style>
+  .lost ul {
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--text);
+  }
+
+  .lost a {
+    display: block;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border);
+    font-family: var(--font-serif);
+    font-weight: 300;
+    font-size: 28px;
+    line-height: 1.2;
+    text-decoration: none;
+  }
+</style>

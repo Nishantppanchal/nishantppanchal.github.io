@@ -1,0 +1,98 @@
+---
+import '@fontsource/spectral/300.css';
+import '@fontsource/spectral/400.css';
+import '@fontsource/spectral/500.css';
+import '@fontsource/spectral/300-italic.css';
+import '@fontsource/spectral/400-italic.css';
+import '@fontsource/poppins/400.css';
+import '@fontsource/poppins/500.css';
+import '@fontsource/space-mono/400.css';
+import '../styles/tokens.css';
+import '../styles/global.css';
+
+import spectralLight from '@fontsource/spectral/files/spectral-latin-300-normal.woff2?url';
+import spectralLightItalic from '@fontsource/spectral/files/spectral-latin-300-italic.woff2?url';
+import poppinsRegular from '@fontsource/poppins/files/poppins-latin-400-normal.woff2?url';
+import spaceMono from '@fontsource/space-mono/files/space-mono-latin-400-normal.woff2?url';
+import { ClientRouter } from 'astro:transitions';
+
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import Seo, { type Props as SeoProps } from '../components/Seo.astro';
+import ThemeScript from '../components/ThemeScript.astro';
+
+export interface Props extends SeoProps {
+  /** Home uses a slightly looser rhythm between blocks. */
+  spacious?: boolean;
+  /** Preload Space Mono too (Home, where the intro first shows as source). */
+  preloadMono?: boolean;
+}
+
+const { spacious = false, preloadMono = false, ...seo } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en-AU">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <ThemeScript />
+    {/* Fonts that size above-the-fold text, preloaded so they arrive before
+         first paint and the intro block doesn't reflow when they swap in. */}
+    {[spectralLight, spectralLightItalic, poppinsRegular, ...(preloadMono ? [spaceMono] : [])].map(
+      (href) => (
+        <link rel="preload" href={href} as="font" type="font/woff2" crossorigin />
+      ),
+    )}
+    <Seo {...seo} />
+    <ClientRouter />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">
+      Skip to content
+    </a>
+    <div class:list={['shell', { spacious }]}>
+      <Header />
+      <main id="main" class="main">
+        <slot />
+      </main>
+      <Footer />
+    </div>
+    <script>
+      import '../scripts/site';
+    </script>
+  </body>
+</html>
+
+<style>
+  .shell {
+    display: flex;
+    flex-direction: column;
+    gap: var(--rhythm);
+    max-width: calc(var(--content-width) + 2 * var(--gutter));
+    min-height: 100vh;
+    margin: 0 auto;
+    padding: 0 var(--gutter) 96px;
+  }
+
+  .shell.spacious {
+    --rhythm: 96px;
+  }
+
+  .main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--rhythm);
+  }
+
+  @media (max-width: 640px) {
+    .shell {
+      padding-bottom: 64px;
+    }
+
+    .shell.spacious {
+      --rhythm: 72px;
+    }
+  }
+</style>
