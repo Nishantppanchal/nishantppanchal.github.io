@@ -1,0 +1,110 @@
+---
+import { render } from 'astro:content';
+
+import LinkList from '../components/LinkList.astro';
+import PageHeader from '../components/PageHeader.astro';
+import YearGroup from '../components/YearGroup.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getPublished, groupByYear, hasBody, staggerIndex } from '../lib/content';
+
+const entries = (await getPublished('projects')).sort(
+  (a, b) =>
+    b.data.year - a.data.year ||
+    a.data.order - b.data.order ||
+    a.data.title.localeCompare(b.data.title),
+);
+
+const rendered = await Promise.all(
+  entries.map(async (entry) => ({
+    entry,
+    Content: hasBody(entry) ? (await render(entry)).Content : null,
+  })),
+);
+
+let counter = 0;
+const groups = groupByYear(rendered, ({ entry }) => entry.data.year).map((group) => ({
+  ...group,
+  items: group.items.map((item) => ({ ...item, index: staggerIndex(counter++) })),
+}));
+---
+
+<BaseLayout
+  title="Projects"
+  description="Things Nishant Panchal has built, from first experiments to current tools."
+  ogImage="projects"
+  ogImageAlt="Projects — Nishant Panchal"
+>
+  <PageHeader
+    title="Projects"
+    subtitle="Things I have built, from first experiments to current tools."
+  />
+
+  <section class="list" aria-label="Project entries">
+    {groups.map((group) => (
+      <YearGroup year={group.year} index={group.items[0]?.index ?? 0} gap={26}>
+        {group.items.map(({ entry, Content, index }) => {
+          const { title, stack, summary, links } = entry.data;
+          const primary = links[0];
+          return (
+            <article class="project reveal" style={`--i: ${index}`}>
+              <div class="project-head">
+                <h2 class="project-title">
+                  {primary ? <a href={primary.href}>{title}</a> : title}
+                </h2>
+                <p class="stack">{stack}</p>
+              </div>
+              <p class="summary">{summary}</p>
+              {Content && (
+                <div class="prose">
+                  <Content />
+                </div>
+              )}
+              <LinkList links={links} context={title} />
+            </article>
+          );
+        })}
+      </YearGroup>
+    ))}
+  </section>
+</BaseLayout>
+
+<style>
+  .list {
+    border-top: 1px solid var(--text);
+  }
+
+  .project {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .project-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 4px 16px;
+  }
+
+  .project-title {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: clamp(22px, 5vw, 24px);
+    line-height: 1.25;
+  }
+
+  .project-title a {
+    text-decoration: none;
+  }
+
+  .stack {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .summary {
+    color: var(--body);
+  }
+</style>

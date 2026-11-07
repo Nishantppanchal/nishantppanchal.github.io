@@ -1,3 +1,22 @@
+# build output
+dist/
+.astro/
+
+# dependencies
 node_modules/
-.cache/
-public
+
+# logs
+npm-debug.log*
+pnpm-debug.log*
+
+# environment
+.env
+.env.*
+
+# OS / editor
+.DS_Store
+.vscode/*
+!.vscode/extensions.json
+
+# local handoff material
+*-handoff.zip

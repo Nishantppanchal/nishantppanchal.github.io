@@ -1,0 +1,80 @@
+---
+/**
+ * The label is corrected on the client to match the active theme; the
+ * server renders the light-theme label because light is the default.
+ */
+---
+
+<button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch to dark mode">
+  <svg
+    class="icon-sun"
+    aria-hidden="true"
+    width="18"
+    height="18"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.5"
+    stroke-linecap="round"
+  >
+    <circle cx="12" cy="12" r="4"></circle>
+    <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path>
+  </svg>
+  <svg
+    class="icon-moon"
+    aria-hidden="true"
+    width="18"
+    height="18"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"></path>
+  </svg>
+</button>
+
+<style>
+  .theme-toggle {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--touch);
+    height: var(--touch);
+    padding: 0;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--text);
+    cursor: pointer;
+  }
+
+  .theme-toggle:hover {
+    opacity: 0.75;
+  }
+
+  .theme-toggle:focus-visible {
+    border-radius: 999px;
+  }
+
+  /* Without JS the toggle can't work, so hide it. */
+  :global(:root:not([data-js])) .theme-toggle {
+    display: none;
+  }
+
+  /* Sun in dark mode, moon in light mode. */
+  .icon-sun {
+    display: none;
+  }
+
+  :global(:root[data-theme='dark']) .icon-sun {
+    display: block;
+  }
+
+  :global(:root[data-theme='dark']) .icon-moon {
+    display: none;
+  }
+</style>

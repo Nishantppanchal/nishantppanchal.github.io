@@ -1,0 +1,221 @@
+---
+/**
+ * The home-page intro, rendered typeset on the server. With JS and motion
+ * allowed, it first shows as LaTeX source and typesets itself token by token
+ * (see src/scripts/latex-intro.ts). Hovering it reverts to source.
+ *
+ * Layout: three paragraphs share one grid cell. Two invisible ghosts (the
+ * typeset text and the full source) hold the cell at the larger of the two
+ * heights, so nothing below moves while the animation runs. The ghosts
+ * draw their text from attributes via ::before, so it isn't duplicated in
+ * the document text.
+ */
+import { introPlainText, site } from '../data/site';
+
+interface Token {
+  text: string;
+  em: boolean;
+  source: string;
+}
+
+const emph = (text: string) => `\\emph{${text}}`;
+
+// Plain segments split after each space; each emphasised segment is one token.
+const tokens: Token[] = site.intro.flatMap((segment): Token[] => {
+  const em = 'em' in segment && segment.em === true;
+  if (em) return [{ text: segment.text, em, source: emph(segment.text) }];
+  return segment.text
+    .split(/(?<= )/)
+    .filter(Boolean)
+    .map((word) => ({ text: word, em: false, source: word }));
+});
+
+const sourceText = tokens.map((token) => token.source).join('');
+
+// Built as strings so formatters can't slip whitespace in between tokens.
+const escapeHtml = (value: string) =>
+  value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+
+const typesetGhostHtml = site.intro
+  .map((segment) => {
+    const em = 'em' in segment && segment.em === true;
+    return `<span${em ? ' class="em"' : ''} data-ghost="${escapeHtml(segment.text)}"></span>`;
+  })
+  .join('');
+
+const liveHtml = tokens
+  .map((token) => {
+    const text = escapeHtml(token.text);
+    return (
+      `<span class="tok${token.em ? ' em' : ''}" data-src="${escapeHtml(token.source)}">` +
+      `<span class="tok-t">${token.em ? `<em>${text}</em>` : text}</span></span>`
+    );
+  })
+  .join('');
+const STATUS_DONE = 'Output written on intro.pdf (1 page).';
+const STATUS_SOURCE = '$ pdflatex intro.tex';
+---
+
+<div class="intro" data-intro>
+  <p class="sr-only">{introPlainText}</p>
+  <div class="intro-grid">
+    <p class="intro-text ghost" aria-hidden="true" set:html={typesetGhostHtml} />
+    <p class="intro-text ghost" aria-hidden="true">
+      <span class="src" data-ghost={sourceText}></span>
+      <span class="caret"></span>
+    </p>
+    <p class="intro-text live" aria-hidden="true">
+      <Fragment set:html={liveHtml} />
+      <span class="caret"></span>
+    </p>
+  </div>
+  <p class="status" aria-hidden="true">
+    <span class="status-pre">{STATUS_SOURCE}</span>
+    <span class="status-live" data-status>
+      {STATUS_DONE}
+    </span>
+  </p>
+</div>
+
+<script>
+  import { initLatexIntro } from '../scripts/latex-intro';
+
+  let destroy: (() => void) | undefined;
+
+  document.addEventListener('astro:page-load', () => {
+    destroy?.();
+    const root = document.querySelector<HTMLElement>('[data-intro]');
+    destroy = root ? initLatexIntro(root) : undefined;
+  });
+
+  document.addEventListener('astro:before-swap', () => {
+    destroy?.();
+    destroy = undefined;
+  });
+</script>
+
+<style is:global>
+  /* Global (but .intro-prefixed) because the token spans come from set:html
+     and so carry no scoped-style attribute. */
+  .intro {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  .intro-grid {
+    display: grid;
+  }
+
+  .intro .intro-text {
+    grid-area: 1 / 1;
+    font-family: var(--font-serif);
+    font-weight: 300;
+    font-size: clamp(22px, 5.4vw, 30px);
+    line-height: 1.45;
+  }
+
+  .intro .intro-text em,
+  .intro .ghost .em {
+    font-style: italic;
+  }
+
+  .intro .ghost {
+    visibility: hidden;
+  }
+
+  .intro .ghost [data-ghost]::before {
+    content: attr(data-ghost);
+  }
+
+  .intro .src,
+  .intro .live .tok::before {
+    font-family: var(--font-mono);
+    font-weight: 400;
+    font-style: normal;
+    font-size: 0.7em;
+  }
+
+  .intro .caret {
+    display: none;
+    width: 0.5em;
+    height: 1em;
+    margin-left: 0.1em;
+    vertical-align: -0.12em;
+    background: var(--text);
+  }
+
+  .intro .ghost .caret {
+    display: inline-block;
+  }
+
+  .intro .status {
+    min-height: 20px;
+    overflow: hidden;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 20px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: var(--muted);
+  }
+
+  .intro .status-pre {
+    display: none;
+  }
+
+  @keyframes intro-caret-blink {
+    50% {
+      opacity: 0;
+    }
+  }
+
+  @keyframes intro-settle {
+    from {
+      opacity: 0;
+      filter: blur(3px);
+    }
+    to {
+      opacity: 1;
+      filter: blur(0);
+    }
+  }
+
+  /*
+   * JS-only states. `data-js` is set in <head> before first paint, so the
+   * source view shows from the first frame. With reduced motion or no JS,
+   * none of this applies and the paragraph stays typeset.
+   */
+  @media (prefers-reduced-motion: no-preference) {
+    :root[data-js] .intro .live .tok:not(.is-done) > .tok-t {
+      display: none;
+    }
+
+    :root[data-js] .intro .live .tok:not(.is-done)::before {
+      content: attr(data-src);
+      color: var(--muted);
+    }
+
+    :root[data-js] .intro .live .tok.em:not(.is-done)::before {
+      color: var(--cmd);
+    }
+
+    .intro .live .tok.is-done > .tok-t {
+      animation: intro-settle 0.35s ease-out both;
+    }
+
+    :root[data-js] .intro:not([data-phase]) .live .caret,
+    .intro[data-phase='source'] .live .caret {
+      display: inline-block;
+      animation: intro-caret-blink 1s steps(1) infinite;
+    }
+
+    :root[data-js] .intro:not([data-phase]) .status-pre {
+      display: inline;
+    }
+
+    :root[data-js] .intro:not([data-phase]) .status-live {
+      display: none;
+    }
+  }
+</style>
