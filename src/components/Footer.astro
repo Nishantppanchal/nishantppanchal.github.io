@@ -1,0 +1,54 @@
+---
+import { site } from '../data/site';
+
+const { user, domain, tld } = site.email;
+---
+
+<footer class="site-footer">
+  <p class="email" data-email data-u={user} data-d={domain} data-t={tld}>
+    {user} [at] {domain} [dot] {tld}
+  </p>
+  <ul class="social">
+    <li>
+      <a href={site.github} rel="me">
+        GitHub
+      </a>
+    </li>
+    <li>
+      <a href={site.linkedin} rel="me">
+        LinkedIn
+      </a>
+    </li>
+  </ul>
+</footer>
+
+<style>
+  .site-footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0 16px;
+    font-size: 14px;
+    color: var(--muted);
+  }
+
+  .email {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--touch);
+  }
+
+  .social {
+    display: flex;
+    gap: 24px;
+    padding: 0;
+    list-style: none;
+  }
+
+  .site-footer a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--touch);
+  }
+</style>

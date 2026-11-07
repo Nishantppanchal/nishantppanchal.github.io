@@ -1,0 +1,43 @@
+---
+export interface Props {
+  links: { label: string; href: string }[];
+  /** What the links belong to, so "code" reads as "code: Pac-Man" to screen readers. */
+  context: string;
+}
+
+const { links, context } = Astro.props;
+---
+
+{links.length > 0 && (
+  <ul class="links">
+    {links.map((link) => (
+      <li>
+        <a href={link.href} aria-label={`${link.label}: ${context}`}>
+          <span aria-hidden="true">[</span>
+          {link.label}
+          <span aria-hidden="true">]</span>
+        </a>
+      </li>
+    ))}
+  </ul>
+)}
+
+<style>
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 14px;
+    padding: 4px 0 0;
+    list-style: none;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 20px;
+  }
+
+  /* 44px tall hit area without changing the visual spacing. */
+  .links a {
+    display: inline-block;
+    padding-block: 12px;
+    margin-block: -12px;
+  }
+</style>

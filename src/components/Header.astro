@@ -1,0 +1,98 @@
+---
+import { nav, site } from '../data/site';
+import ThemeToggle from './ThemeToggle.astro';
+
+const path = Astro.url.pathname.replace(/\/?$/, '/');
+const isCurrent = (href: string) => path === href || path.startsWith(href);
+// On Home the big <h1> already shows the name, so the small one is left out
+// there. Elsewhere it carries the shared "site-name" transition and morphs
+// into the <h1> when navigating Home (and back out again).
+const onHome = path === '/';
+---
+
+<header class="site-header">
+  {!onHome && (
+    <a href="/" class="site-name">
+      <span class="site-name-text" transition:name="site-name">
+        {site.name}
+      </span>
+    </a>
+  )}
+  <div class="header-end">
+    <nav aria-label="Primary">
+      <ul class="nav-list">
+        {nav.map((item) => (
+          <li>
+            <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+    <ThemeToggle />
+  </div>
+</header>
+
+<style>
+  .site-header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px 24px;
+    padding-top: 40px;
+  }
+
+  .site-name {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--touch);
+    font-family: var(--font-serif);
+    font-size: 20px;
+    text-decoration: none;
+  }
+
+  /* Same box shape as the Home <h1> text, so the morph between them scales evenly. */
+  .site-name-text {
+    display: inline-block;
+    line-height: 1.02;
+  }
+
+  .header-end {
+    margin-left: auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px 24px;
+  }
+
+  .nav-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 24px;
+    padding: 0;
+    list-style: none;
+    font-size: 14px;
+  }
+
+  .nav-list a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--touch);
+    color: var(--muted);
+    text-decoration: none;
+  }
+
+  .nav-list a[aria-current='page'] {
+    color: var(--text);
+    text-decoration-line: underline;
+    text-decoration-color: var(--text);
+  }
+
+  @media (max-width: 400px) {
+    .nav-list {
+      gap: 0 18px;
+    }
+  }
+</style>

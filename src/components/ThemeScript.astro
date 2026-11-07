@@ -1,0 +1,45 @@
+---
+/**
+ * Runs in <head> before first paint so the page never flashes the wrong
+ * theme. It also sets `data-js`, which CSS uses to enable JS-only states
+ * (the LaTeX intro's source view and the theme toggle). Astro's router swaps
+ * <html> attributes on navigation, so the same logic runs on each new
+ * document before it is swapped in.
+ */
+---
+
+<script is:inline>
+  (() => {
+    const KEY = 'theme';
+    const dark = window.matchMedia('(prefers-color-scheme: dark)');
+
+    const stored = () => {
+      try {
+        const value = window.localStorage.getItem(KEY);
+        return value === 'dark' || value === 'light' ? value : null;
+      } catch {
+        return null;
+      }
+    };
+
+    const apply = (doc) => {
+      const choice = stored();
+      const theme = choice ?? (dark.matches ? 'dark' : 'light');
+      const root = doc.documentElement;
+      root.dataset.theme = theme;
+      root.dataset.js = '';
+      if (choice) {
+        const color = theme === 'dark' ? '#121212' : '#FFFFFF';
+        doc.querySelectorAll('meta[name="theme-color"]').forEach((meta) => {
+          meta.setAttribute('content', color);
+        });
+      }
+    };
+
+    apply(document);
+    document.addEventListener('astro:before-swap', (event) => apply(event.newDocument));
+    dark.addEventListener('change', () => {
+      if (!stored()) apply(document);
+    });
+  })();
+</script>

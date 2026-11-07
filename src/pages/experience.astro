@@ -1,0 +1,248 @@
+---
+import { getCollection, render } from 'astro:content';
+
+import PageHeader from '../components/PageHeader.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { dateKey, formatRange, getPublished, hasBody, staggerIndex } from '../lib/content';
+
+// Newest first: by end date ("now" beats everything), then start date.
+const byRecency = (
+  a: { data: { start: string; end: string } },
+  b: { data: { start: string; end: string } },
+) => dateKey(b.data.end) - dateKey(a.data.end) || dateKey(b.data.start) - dateKey(a.data.start);
+
+const roles = await Promise.all(
+  (await getPublished('experience')).sort(byRecency).map(async (entry) => ({
+    entry,
+    Content: hasBody(entry) ? (await render(entry)).Content : null,
+  })),
+);
+
+// Group by organisation. Because roles are already newest first, groups come
+// out ordered by their most recent role, and each group's first role sets
+// the location shown beside the organisation's name.
+const orgMap = new Map<string, typeof roles>();
+for (const role of roles) {
+  const group = orgMap.get(role.entry.data.org);
+  if (group) group.push(role);
+  else orgMap.set(role.entry.data.org, [role]);
+}
+
+let counter = 0;
+const orgs = [...orgMap.entries()].map(([org, orgRoles]) => ({
+  org,
+  location: orgRoles[0]?.entry.data.location ?? '',
+  index: staggerIndex(counter),
+  roles: orgRoles.map((role) => ({ ...role, index: staggerIndex(counter++) })),
+}));
+
+const education = await Promise.all(
+  (await getPublished('education'))
+    .sort((a, b) => a.data.order - b.data.order)
+    .map(async (entry) => ({
+      entry,
+      Content: hasBody(entry) ? (await render(entry)).Content : null,
+      index: staggerIndex(counter++),
+    })),
+);
+
+const awards = (await getCollection('awards'))
+  .sort((a, b) => a.data.position - b.data.position)
+  .map((entry) => ({ ...entry.data, index: staggerIndex(counter++) }));
+---
+
+<BaseLayout
+  title="Experience & education"
+  description="Where Nishant Panchal has worked and studied: roles, education and awards."
+  ogImage="experience"
+  ogImageAlt="Experience & education — Nishant Panchal"
+>
+  <PageHeader title="Experience & education" subtitle="Where I have worked and studied." />
+
+  <section class="block" aria-labelledby="experience-h">
+    <h2 id="experience-h" class="section-label">
+      Experience
+    </h2>
+    {orgs.map((group) => (
+      <div class="org">
+        <h3 class="org-name reveal" style={`--i: ${group.index}`}>
+          {group.org}
+          <span class="org-where">{group.location}</span>
+        </h3>
+        {group.roles.map(({ entry, Content, index }) => (
+          <div class="row role reveal" style={`--i: ${index}`}>
+            <p class="when">{formatRange(entry.data.start, entry.data.end)}</p>
+            <div class="row-body">
+              <h4 class="row-title">{entry.data.title}</h4>
+              {entry.data.roleLocation && <p class="role-where">{entry.data.roleLocation}</p>}
+              {Content && (
+                <div class="prose">
+                  <Content />
+                </div>
+              )}
+              {entry.data.highlights.length > 0 && (
+                <ul class="highlights">
+                  {entry.data.highlights.map((highlight) => (
+                    <li>{highlight}</li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    ))}
+  </section>
+
+  <section class="block" aria-labelledby="education-h">
+    <h2 id="education-h" class="section-label">
+      Education
+    </h2>
+    {education.map(({ entry, Content, index }) => (
+      <div class="row edu reveal" style={`--i: ${index}`}>
+        <p class="when">{formatRange(entry.data.start, entry.data.end)}</p>
+        <div class="row-body edu-body">
+          <h3 class="row-title">{entry.data.degree}</h3>
+          <p class="school">{entry.data.school}</p>
+          {Content && (
+            <div class="prose edu-description">
+              <Content />
+            </div>
+          )}
+        </div>
+      </div>
+    ))}
+  </section>
+
+  <section class="block" aria-labelledby="awards-h">
+    <h2 id="awards-h" class="section-label">
+      Awards
+    </h2>
+    <ul class="awards">
+      {awards.map((award) => (
+        <li class="row award reveal" style={`--i: ${award.index}`}>
+          <span class="when">{award.year}</span>
+          <span class="award-text">{award.text}</span>
+        </li>
+      ))}
+    </ul>
+  </section>
+</BaseLayout>
+
+<style>
+  .block {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .org {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 32px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .org-name {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 4px 14px;
+    margin-bottom: 8px;
+    font-family: var(--font-serif);
+    font-weight: 300;
+    font-size: clamp(26px, 6vw, 30px);
+    line-height: 1.2;
+  }
+
+  .org-where,
+  .role-where {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--muted);
+  }
+
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 48px;
+  }
+
+  .role {
+    padding: 14px 0;
+  }
+
+  .when {
+    flex: 0 0 160px;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 1.5;
+    color: var(--muted);
+  }
+
+  .row-body {
+    flex: 1 1 440px;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .row-title {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 1.3;
+  }
+
+  .highlights {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 2px;
+    padding-left: 18px;
+    color: var(--body);
+  }
+
+  .edu {
+    gap: 6px 48px;
+    padding: 26px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .edu-body {
+    gap: 4px;
+  }
+
+  .school {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 18px;
+    color: var(--body);
+  }
+
+  .edu-description {
+    margin-top: 4px;
+  }
+
+  .awards {
+    padding: 0;
+    list-style: none;
+  }
+
+  .award {
+    gap: 2px 48px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .award-text {
+    flex: 1 1 440px;
+    min-width: 0;
+    font-family: var(--font-serif);
+    font-size: 18px;
+  }
+</style>
