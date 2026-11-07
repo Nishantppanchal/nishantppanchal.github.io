@@ -1,0 +1,18 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: monthly
+    groups:
+      astro:
+        patterns: ['astro', '@astrojs/*']
+      fonts:
+        patterns: ['@fontsource/*']
+      tooling:
+        patterns: ['prettier', 'prettier-plugin-astro', 'typescript']
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly

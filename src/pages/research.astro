@@ -1,0 +1,158 @@
+---
+import { render } from 'astro:content';
+
+import LinkList from '../components/LinkList.astro';
+import PageHeader from '../components/PageHeader.astro';
+import YearGroup from '../components/YearGroup.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../data/site';
+import { getPublished, groupByYear, hasBody, staggerIndex } from '../lib/content';
+
+const entries = (await getPublished('research')).sort(
+  (a, b) =>
+    b.data.year - a.data.year ||
+    a.data.order - b.data.order ||
+    a.data.title.localeCompare(b.data.title),
+);
+
+const rendered = await Promise.all(
+  entries.map(async (entry) => ({
+    entry,
+    Content: hasBody(entry) ? (await render(entry)).Content : null,
+  })),
+);
+
+let counter = 0;
+const groups = groupByYear(rendered, ({ entry }) => entry.data.year).map((group) => ({
+  ...group,
+  items: group.items.map((item) => ({ ...item, index: staggerIndex(counter++) })),
+}));
+
+// ScholarlyArticle JSON-LD for entries that have a DOI.
+const scholarly = entries.flatMap((entry) => {
+  const doi = entry.data.links.find((link) => link.href.startsWith('https://doi.org/'));
+  if (!doi) return [];
+  return [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'ScholarlyArticle',
+      headline: entry.data.title,
+      name: entry.data.title,
+      url: doi.href,
+      sameAs: entry.data.links.map((link) => link.href),
+      identifier: { '@type': 'PropertyValue', propertyID: 'DOI', value: doi.href.slice(16) },
+      author: (entry.data.authors ?? [site.name]).map((name) =>
+        name === site.name
+          ? { '@type': 'Person', name, url: new URL('/', site.url).href }
+          : { '@type': 'Person', name },
+      ),
+      datePublished: String(entry.data.published ?? entry.data.year),
+      isPartOf: { '@type': 'Periodical', name: entry.data.venue },
+      ...(entry.body?.trim() ? { abstract: entry.body.trim() } : {}),
+    },
+  ];
+});
+---
+
+<BaseLayout
+  title="Research"
+  description="Publications, theses and research projects by Nishant Panchal, newest first."
+  ogImage="research"
+  ogImageAlt="Research — Nishant Panchal"
+  jsonLd={scholarly.length > 0 ? scholarly : undefined}
+>
+  <PageHeader
+    title="Research"
+    subtitle="Publications, theses and research projects, newest first."
+  />
+
+  <section class="list" aria-label="Research entries">
+    {groups.map((group) => (
+      <YearGroup year={group.year} index={group.items[0]?.index ?? 0}>
+        {group.items.map(({ entry, Content, index }) => {
+          const { type, title, authors, venue, published, links } = entry.data;
+          const primary = links[0];
+          return (
+            <article class="entry reveal" style={`--i: ${index}`}>
+              <p class="entry-type">{type}</p>
+              <h2 class="entry-title">{primary ? <a href={primary.href}>{title}</a> : title}</h2>
+              {authors && authors.length > 0 && (
+                <p class="authors">
+                  {authors.map((name, i) => (
+                    <>
+                      {name === site.name ? <strong>{name}</strong> : name}
+                      {i < authors.length - 1 ? ', ' : ''}
+                    </>
+                  ))}
+                </p>
+              )}
+              <p class="venue">
+                {venue}
+                {published !== undefined && ` · published ${published}`}
+              </p>
+              {Content && (
+                <div class="prose description">
+                  <Content />
+                </div>
+              )}
+              <LinkList links={links} context={title} />
+            </article>
+          );
+        })}
+      </YearGroup>
+    ))}
+  </section>
+</BaseLayout>
+
+<style>
+  .list {
+    border-top: 1px solid var(--text);
+  }
+
+  .entry {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .entry-type {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .entry-title {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: clamp(22px, 5vw, 26px);
+    line-height: 1.25;
+  }
+
+  .entry-title a {
+    text-decoration: none;
+  }
+
+  .authors {
+    font-family: var(--font-serif);
+    font-size: 17px;
+    color: var(--body);
+  }
+
+  .authors strong {
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .venue {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 18px;
+    color: var(--muted);
+  }
+
+  .description {
+    margin-top: 6px;
+  }
+</style>

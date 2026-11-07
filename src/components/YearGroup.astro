@@ -1,0 +1,58 @@
+---
+export interface Props {
+  year: number | string;
+  /** Entrance stagger index for the year label. */
+  index: number;
+  /** Gap between entries in the group. */
+  gap?: number;
+}
+
+const { year, index, gap = 40 } = Astro.props;
+---
+
+<div class="year-group">
+  <p class="year reveal" style={`--i: ${index}`}>
+    {year}
+  </p>
+  <div class="year-items" style={`--gap: ${gap}px`}>
+    <slot />
+  </div>
+</div>
+
+<style>
+  .year-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 48px;
+    padding: 32px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .year {
+    flex: 0 0 120px;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 300;
+    font-size: 30px;
+    line-height: 1.1;
+    color: var(--muted);
+  }
+
+  .year-items {
+    flex: 1 1 480px;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap);
+  }
+
+  @media (max-width: 640px) {
+    .year-group {
+      gap: 16px;
+    }
+
+    .year {
+      font-size: 26px;
+    }
+  }
+</style>

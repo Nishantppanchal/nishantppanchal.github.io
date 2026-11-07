@@ -1,0 +1,5 @@
+# @astrojs/astro2tsx (used by `astro check`) pins @emnapi/core 1.x, but its
+# wasm runtime accepts @emnapi/runtime 2.x betas as a peer, and pnpm picks the
+# beta. Mixing the two crashes `astro check`, so keep the runtime on 1.x.
+overrides:
+  '@emnapi/runtime': 1.11.3
