@@ -3,3 +3,6 @@
 # beta. Mixing the two crashes `astro check`, so keep the runtime on 1.x.
 overrides:
   '@emnapi/runtime': 1.11.3
+  # satori's font parser allows fflate ^0.7.3 but pnpm keeps the locked 0.7.3,
+  # which has a known ZIP64 infinite-loop bug (fixed in 0.7.5).
+  'fflate@<0.7.5': ^0.7.5

@@ -11,6 +11,11 @@ updates:
         patterns: ['@fontsource/*']
       tooling:
         patterns: ['prettier', 'prettier-plugin-astro', 'typescript']
+    ignore:
+      # @astrojs/check (used by `pnpm check`) doesn't support TypeScript 7 yet.
+      # Remove this once it does.
+      - dependency-name: typescript
+        update-types: ['version-update:semver-major']
 
   - package-ecosystem: github-actions
     directory: /
