@@ -1,5 +1,5 @@
 /**
- * Site-wide client behaviour: the theme toggle. Bundled
+ * Site-wide client behaviour: the theme toggle and the email link. Bundled
  * once; Astro's router fires `astro:page-load` after every navigation.
  */
 
@@ -65,4 +65,25 @@ document.addEventListener('click', (event) => {
 // toggle's label in step with it.
 systemDark.addEventListener('change', syncToggleLabels);
 
-document.addEventListener('astro:page-load', syncToggleLabels);
+/**
+ * Turns the footer's encoded address into a mailto link. The HTML carries the
+ * address only as base64 of the reversed string, so scrapers that read the
+ * page without running scripts never see it.
+ */
+function revealEmail(): void {
+  document.querySelectorAll<HTMLElement>('[data-email]').forEach((el) => {
+    const encoded = el.dataset.email;
+    if (!encoded) return;
+    const address = [...window.atob(encoded)].reverse().join('');
+    const link = document.createElement('a');
+    link.href = `mailto:${address}`;
+    link.textContent = address;
+    el.replaceChildren(link);
+    el.removeAttribute('data-email');
+  });
+}
+
+document.addEventListener('astro:page-load', () => {
+  syncToggleLabels();
+  revealEmail();
+});

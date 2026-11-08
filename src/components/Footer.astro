@@ -2,10 +2,14 @@
 import { site } from '../data/site';
 
 const { user, domain, tld } = site.email;
+
+// Base64 of the reversed address: no "@" or "mailto:" for scrapers to match.
+// src/scripts/site.ts decodes it into a link.
+const encoded = btoa([...`${user}@${domain}.${tld}`].reverse().join(''));
 ---
 
 <footer class="site-footer">
-  <p class="email">
+  <p class="email" data-email={encoded}>
     {user}[at]{domain}[dot]{tld}
   </p>
   <ul class="social">

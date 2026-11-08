@@ -36,8 +36,9 @@ export const site = {
   },
 
   /**
-   * Shown only as user[at]domain[dot]tld, never as a plain address or a
-   * mailto link, so scrapers can't harvest it.
+   * Kept in parts so the plain address never appears in the source or the
+   * HTML. The footer encodes it and a script turns it into a mailto link;
+   * without JavaScript it reads user[at]domain[dot]tld.
    */
   email: {
     user: 'contact',
