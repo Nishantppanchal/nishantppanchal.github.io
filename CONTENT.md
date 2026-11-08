@@ -106,4 +106,4 @@ Also in `site.ts`:
 - `about`: the paragraph below the role line.
 - `role`: the title, organisation and location that make up the role line.
 - `description`: the default meta description for search engines and link previews.
-- `github`, `linkedin` and the `email` parts. The email is assembled in the browser, so the full address never appears in the HTML.
+- `github`, `linkedin` and the `email` parts. The email is shown only as `user[at]domain[dot]tld`, never as a plain address or a mailto link, so scrapers can’t harvest it.

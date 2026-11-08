@@ -1,5 +1,5 @@
 /**
- * Site-wide client behaviour: the theme toggle and the email link. Bundled
+ * Site-wide client behaviour: the theme toggle. Bundled
  * once; Astro's router fires `astro:page-load` after every navigation.
  */
 
@@ -61,25 +61,8 @@ document.addEventListener('click', (event) => {
   setTheme(currentTheme() === 'dark' ? 'light' : 'dark');
 });
 
-/** Builds the mailto link on the client so the address never sits in the HTML. */
-function revealEmail(): void {
-  document.querySelectorAll<HTMLElement>('[data-email]').forEach((el) => {
-    const { u, d, t } = el.dataset;
-    if (!u || !d || !t) return;
-    const address = `${u}@${d}.${t}`;
-    const link = document.createElement('a');
-    link.href = `mailto:${address}`;
-    link.textContent = address;
-    el.replaceChildren(link);
-    el.removeAttribute('data-email');
-  });
-}
-
 // The head script re-applies the system theme when the OS switches; keep the
 // toggle's label in step with it.
 systemDark.addEventListener('change', syncToggleLabels);
 
-document.addEventListener('astro:page-load', () => {
-  syncToggleLabels();
-  revealEmail();
-});
+document.addEventListener('astro:page-load', syncToggleLabels);

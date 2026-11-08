@@ -35,7 +35,10 @@ export const site = {
     location: 'Melbourne',
   },
 
-  /** Stored in parts so the plain address never appears in the HTML. */
+  /**
+   * Shown only as user[at]domain[dot]tld, never as a plain address or a
+   * mailto link, so scrapers can't harvest it.
+   */
   email: {
     user: 'contact',
     domain: 'nishantppanchal',

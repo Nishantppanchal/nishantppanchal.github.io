@@ -30,7 +30,7 @@ If pnpm isn't installed, `npx pnpm@12.18.0 <command>` works too.
 | `src/styles/tokens.css` | Colour and type tokens for the light and dark themes               |
 | `src/components/`       | Header, footer, theme toggle, LaTeX intro and list building blocks |
 | `src/pages/`            | Routes, plus build-time OG images, favicon and robots.txt          |
-| `src/scripts/`          | The only client JS: theme toggle, email link, LaTeX intro          |
+| `src/scripts/`          | The only client JS: theme toggle and LaTeX intro                   |
 
 ## Deployment
 
