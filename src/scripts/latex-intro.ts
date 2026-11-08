@@ -8,8 +8,9 @@
  *   reverting  runs back to source, 18ms per token
  *
  * A mouse hovering for 250ms reverts to source and leaving typesets again.
- * Touch and pen have no hover, so a tap toggles: it reverts if the intro is
- * typeset or typesetting, and typesets if it shows (or is heading to) source.
+ * Touch and pen have no hover, so a tap reverts to source, holds it for
+ * `tapHold`, then typesets again. Tapping while the source shows restarts
+ * the hold.
  *
  * The visual state is CSS-driven: a token shows as source until it has
  * `.is-done`. The server renders the final typeset text, so with no JS or
@@ -22,6 +23,8 @@ const TIMING = {
   backwardStep: 18,
   hoverDelay: 250,
   resumeDelay: 250,
+  /** How long a tap leaves the source showing before typesetting again. */
+  tapHold: 1400,
 } as const;
 
 const STATUS = {
@@ -79,7 +82,8 @@ export function initLatexIntro(root: HTMLElement): () => void {
     }, delay);
   };
 
-  const backward = () => {
+  /** Runs back to source; with `holdThenResume`, typesets again after `tapHold`. */
+  const backward = (holdThenResume = false) => {
     stop();
     setPhase('reverting');
     stepTimer = window.setInterval(() => {
@@ -88,6 +92,7 @@ export function initLatexIntro(root: HTMLElement): () => void {
         window.clearInterval(stepTimer);
         setStep(0);
         setPhase('source');
+        if (holdThenResume) forward(TIMING.tapHold);
       } else {
         setStep(next);
       }
@@ -98,7 +103,7 @@ export function initLatexIntro(root: HTMLElement): () => void {
   const onEnter = (event: PointerEvent) => {
     if (event.pointerType !== 'mouse') return;
     window.clearTimeout(hoverTimer);
-    hoverTimer = window.setTimeout(backward, TIMING.hoverDelay);
+    hoverTimer = window.setTimeout(() => backward(), TIMING.hoverDelay);
   };
 
   const onLeave = (event: PointerEvent) => {
@@ -118,9 +123,9 @@ export function initLatexIntro(root: HTMLElement): () => void {
     if (lastPointer === 'mouse') return;
     // A long press that selected text isn't a tap.
     if (window.getSelection()?.isCollapsed === false) return;
-    const phase = root.dataset.phase;
-    if (phase === 'compiling' || phase === 'done') backward();
-    else forward(0);
+    // Already on source: hold it a little longer. Otherwise run back to it.
+    if (root.dataset.phase === 'source') forward(TIMING.tapHold);
+    else backward(true);
   };
 
   setStep(0);
