@@ -101,6 +101,9 @@ const STATUS_SOURCE = '$ pdflatex intro.tex';
     display: flex;
     flex-direction: column;
     gap: 28px;
+    /* Taps toggle the source view: no double-tap zoom or tap flash here. */
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
   }
 
   .intro-grid {

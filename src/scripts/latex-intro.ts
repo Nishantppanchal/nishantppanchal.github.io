@@ -5,7 +5,11 @@
  *   source     shows `\emph{…}` source with a caret; status "$ pdflatex intro.tex"
  *   compiling  typesets forward, 45ms per token
  *   done       fully typeset
- *   reverting  hover > 250ms runs back to source, 18ms per token
+ *   reverting  runs back to source, 18ms per token
+ *
+ * A mouse hovering for 250ms reverts to source and leaving typesets again.
+ * Touch and pen have no hover, so a tap toggles: it reverts if the intro is
+ * typeset or typesetting, and typesets if it shows (or is heading to) source.
  *
  * The visual state is CSS-driven: a token shows as source until it has
  * `.is-done`. The server renders the final typeset text, so with no JS or
@@ -103,10 +107,28 @@ export function initLatexIntro(root: HTMLElement): () => void {
     if (step < total) forward(TIMING.resumeDelay);
   };
 
+  // `click` doesn't reliably say which pointer made it (Safari), so remember
+  // the type from the press that started it.
+  let lastPointer = 'mouse';
+  const onDown = (event: PointerEvent) => {
+    lastPointer = event.pointerType;
+  };
+
+  const onTap = () => {
+    if (lastPointer === 'mouse') return;
+    // A long press that selected text isn't a tap.
+    if (window.getSelection()?.isCollapsed === false) return;
+    const phase = root.dataset.phase;
+    if (phase === 'compiling' || phase === 'done') backward();
+    else forward(0);
+  };
+
   setStep(0);
   setPhase('source');
   root.addEventListener('pointerenter', onEnter);
   root.addEventListener('pointerleave', onLeave);
+  root.addEventListener('pointerdown', onDown);
+  root.addEventListener('click', onTap);
   forward(TIMING.initialDelay);
 
   return () => {
@@ -114,5 +136,7 @@ export function initLatexIntro(root: HTMLElement): () => void {
     window.clearTimeout(hoverTimer);
     root.removeEventListener('pointerenter', onEnter);
     root.removeEventListener('pointerleave', onLeave);
+    root.removeEventListener('pointerdown', onDown);
+    root.removeEventListener('click', onTap);
   };
 }
