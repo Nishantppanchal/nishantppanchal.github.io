@@ -1,6 +1,5 @@
 import type { APIRoute } from 'astro';
 
-import { faviconImage, pngResponse, renderSvg, svgToPng } from '../lib/images';
+import { faviconSvg, pngResponse, svgToPng } from '../lib/images';
 
-export const GET: APIRoute = async () =>
-  pngResponse(svgToPng(await renderSvg(faviconImage(), 64, 64), 180));
+export const GET: APIRoute = () => pngResponse(svgToPng(faviconSvg({ rounded: false }), 180));

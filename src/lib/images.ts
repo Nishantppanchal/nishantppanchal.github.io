@@ -159,26 +159,47 @@ export function ogImage({ title, eyebrow, subtitle }: OgPage): Node {
   );
 }
 
-/* Favicon: a Spectral "N" on a dark rounded square, legible on light and dark tabs. */
+/*
+ * Favicon: three cooperating agents, joined in a triangle, one in the site's
+ * blue, on a dark rounded square that reads on light and dark tabs. It is
+ * plain SVG; the PNG and ICO sizes are rendered from it.
+ */
 
-export function faviconImage(): Node {
-  return h(
-    'div',
-    {
-      width: '100%',
-      height: '100%',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      background: LIGHT.text,
-      borderRadius: 14,
-      color: LIGHT.bg,
-      fontFamily: 'Spectral',
-      fontWeight: 400,
-      fontSize: 52,
-      lineHeight: 1,
-      paddingBottom: 4,
-    },
-    'N',
-  );
+const FAVICON = { ink: '#111111', node: '#FFFFFF', accent: '#7FA7D9' };
+
+/** `rounded: false` gives a full-bleed square for iOS, which applies its own mask. */
+export function faviconSvg({ rounded = true }: { rounded?: boolean } = {}): string {
+  const { ink, node, accent } = FAVICON;
+  return [
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">',
+    `<rect width="64" height="64" rx="${rounded ? 14 : 0}" fill="${ink}"/>`,
+    `<path d="M18 44H46L32 19Z" fill="none" stroke="${node}" stroke-opacity="0.55" stroke-width="4" stroke-linejoin="round"/>`,
+    `<circle cx="18" cy="44" r="7.5" fill="${node}"/>`,
+    `<circle cx="46" cy="44" r="7.5" fill="${node}"/>`,
+    `<circle cx="32" cy="19" r="7.5" fill="${accent}"/>`,
+    '</svg>',
+  ].join('');
+}
+
+/** Packs PNGs into an .ico file (PNG-in-ICO, supported by every current browser). */
+export function pngsToIco(images: { size: number; png: Uint8Array }[]): Uint8Array {
+  const headerSize = 6 + 16 * images.length;
+  const total = headerSize + images.reduce((sum, { png }) => sum + png.length, 0);
+  const out = new Uint8Array(total);
+  const view = new DataView(out.buffer);
+  view.setUint16(2, 1, true); // type: icon
+  view.setUint16(4, images.length, true);
+  let offset = headerSize;
+  images.forEach(({ size, png }, i) => {
+    const entry = 6 + 16 * i;
+    view.setUint8(entry, size >= 256 ? 0 : size);
+    view.setUint8(entry + 1, size >= 256 ? 0 : size);
+    view.setUint16(entry + 4, 1, true); // colour planes
+    view.setUint16(entry + 6, 32, true); // bits per pixel
+    view.setUint32(entry + 8, png.length, true);
+    view.setUint32(entry + 12, offset, true);
+    out.set(png, offset);
+    offset += png.length;
+  });
+  return out;
 }
