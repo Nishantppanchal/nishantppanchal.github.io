@@ -19,7 +19,8 @@ export default defineConfig({
   },
   integrations: [
     sitemap({
-      filter: (page) => !page.includes('/404'),
+      // Leave out the 404 page and unlisted files such as the shared preprint.
+      filter: (page) => !page.includes('/404') && !page.includes('/files/'),
     }),
   ],
 });

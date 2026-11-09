@@ -1,0 +1,164 @@
+---
+/**
+ * Unlisted viewer for a privately shared preprint: the PDF inside the site's
+ * header and footer, so readers can get from the paper to the rest of the site.
+ *
+ * Nothing on the site links here, it is noindex/nofollow, and the sitemap
+ * leaves out /files/. Keep the paper's title and abstract out of this file:
+ * the repo is public and its text is searchable, while the PDF's is not.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const pdf = '/files/jhp17an33qvx.pdf';
+---
+
+<BaseLayout
+  title="Preprint"
+  description="A preprint shared by Nishant Panchal."
+  ogImage="research"
+  ogImageAlt="Research — Nishant Panchal"
+  noindex
+>
+  <section class="viewer" aria-labelledby="viewer-title">
+    <div class="bar">
+      <div>
+        <h1 id="viewer-title" class="title">
+          Preprint
+        </h1>
+        <p class="meta">PDF · 11 pages · 1.4 MB</p>
+      </div>
+      <ul class="actions">
+        <li class="open-link">
+          <a href={pdf}>
+            <span aria-hidden="true">[</span>open<span aria-hidden="true">]</span>
+          </a>
+        </li>
+        <li>
+          <a href={pdf} download="panchal-preprint.pdf">
+            <span aria-hidden="true">[</span>download<span aria-hidden="true">]</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Desktop browsers show the PDF inline; the fallback covers those that can't. -->
+    <object class="frame" data={pdf} type="application/pdf" aria-label="The preprint (PDF)">
+      <div class="fallback">
+        <p>This browser can’t show the PDF here.</p>
+        <a class="open" href={pdf}>
+          Open the PDF
+        </a>
+      </div>
+    </object>
+
+    <!-- Phones get a button instead: embedded PDFs scroll badly or not at all there. -->
+    <div class="fallback small-screen">
+      <a class="open" href={pdf}>
+        Open the PDF
+      </a>
+      <p>Use your browser’s back button to return here.</p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 12px 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--text);
+  }
+
+  .title {
+    font-family: var(--font-serif);
+    font-weight: 300;
+    font-size: clamp(32px, 7vw, 44px);
+    line-height: 1.1;
+  }
+
+  .meta {
+    margin-top: 6px;
+    font-size: 14px;
+    color: var(--muted);
+  }
+
+  .actions {
+    display: flex;
+    gap: 0 14px;
+    padding: 0;
+    list-style: none;
+  }
+
+  .actions a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--touch);
+    padding: 0 4px;
+    margin: 0 -4px;
+    text-decoration: none;
+  }
+
+  .actions a:hover {
+    text-decoration: underline;
+  }
+
+  .frame {
+    display: block;
+    width: 100%;
+    height: max(560px, calc(100vh - 260px));
+    margin-top: 24px;
+    border: 1px solid var(--border);
+    background: var(--border);
+  }
+
+  .fallback {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 32px 0;
+    color: var(--body);
+  }
+
+  .open {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--touch);
+    padding: 0 22px;
+    border: 1px solid var(--text);
+    border-radius: 999px;
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .open:hover {
+    background: var(--text);
+    color: var(--bg);
+  }
+
+  .frame .fallback {
+    padding: 32px;
+  }
+
+  .small-screen {
+    display: none;
+  }
+
+  @media (max-width: 760px) {
+    .frame {
+      display: none;
+    }
+
+    .small-screen {
+      display: flex;
+    }
+
+    /* The button below does the same job on phones. */
+    .open-link {
+      display: none;
+    }
+  }
+</style>

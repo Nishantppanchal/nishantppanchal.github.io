@@ -32,7 +32,11 @@ const ldJson = jsonLd ? JSON.stringify(jsonLd).replace(/</g, '\\u003c') : null;
 
 <title>{fullTitle}</title>
 <meta name="description" content={description} />
-{noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonical} />}
+{noindex ? (
+  <meta name="robots" content="noindex, nofollow" />
+) : (
+  <link rel="canonical" href={canonical} />
+)}
 
 <meta name="color-scheme" content="light dark" />
 <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)" />
