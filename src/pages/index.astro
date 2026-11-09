@@ -31,6 +31,8 @@ const person = {
   ],
   sameAs: [site.github, site.linkedin],
 };
+
+const rolePartsList = [site.role.title, site.role.org, site.role.location];
 ---
 
 <BaseLayout
@@ -47,7 +49,15 @@ const person = {
       </span>
     </h1>
     <LatexIntro />
-    <p class="role-line">{roleLine}</p>
+    <p class="role-line">
+      {/* Each part stays on one line; wrapping happens only at the separators. */}
+      {rolePartsList.map((part, i) => (
+        <>
+          {i > 0 && ' · '}
+          <span class="role-part">{part}</span>
+        </>
+      ))}
+    </p>
     <p class="about">{site.about}</p>
   </section>
 
@@ -91,6 +101,10 @@ const person = {
     margin-top: 8px;
     font-size: 14px;
     color: var(--muted);
+  }
+
+  .role-part {
+    white-space: nowrap;
   }
 
   .about {

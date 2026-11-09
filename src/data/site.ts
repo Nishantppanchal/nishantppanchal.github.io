@@ -30,7 +30,7 @@ export const site = {
     'My passion for building started with LEGO: hours spent turning small, simple pieces into complicated creations. Software turned out to be the same game with more interesting pieces. What fascinates me most is how models rooted in statistics can power systems that feel intelligent, and I like the work of making those ideas hold up in practice, from low-level architecture to high-level design.',
 
   role: {
-    title: 'Software Engineer, AI',
+    title: 'Software Engineer, Agentic AI',
     org: 'Australian Government',
     location: 'Melbourne',
   },
