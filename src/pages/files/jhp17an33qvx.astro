@@ -9,7 +9,9 @@
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
-const pdf = '/files/jhp17an33qvx.pdf';
+// The PDF lives next to this page. Its first address, /files/jhp17an33qvx.pdf,
+// redirects here (a Cloudflare redirect rule), so it can't be embedded from there.
+const pdf = '/files/jhp17an33qvx/paper.pdf';
 ---
 
 <BaseLayout
